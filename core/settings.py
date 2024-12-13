@@ -14,7 +14,6 @@ DEBUG = env("DEBUG")
 ALLOWED_HOSTS = env.list("ALLOWED_HOSTS")
 BOT_TOKEN = env.str('BOT_TOKEN')
 
-
 INSTALLED_APPS = [
     'jazzmin',
     'modeltranslation',
@@ -60,7 +59,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'core.wsgi.application'
 
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -87,8 +85,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
-LANGUAGE_CODE = 'uz'
+LANGUAGE_CODE = 'ru'
 LANGUAGES = (
     ('en', 'English'),
     ('ru', 'Русский'),
@@ -103,12 +100,9 @@ USE_TZ = True
 STATIC_ROOT = BASE_DIR / 'static'
 STATIC_URL = '/static/'
 
-if DEBUG:
-    STATICFILES_DIRS = [
-        BASE_DIR / 'staticfiles',
-    ]
-else:
-    STATICFILES_DIRS = []
+STATICFILES_DIRS = [
+    BASE_DIR / 'staticfiles',
+]
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
