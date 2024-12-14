@@ -6,9 +6,9 @@ from account.models import CustomUser, VIPPackage, News, UserPackage
 
 @admin.register(CustomUser)
 class CustomUserAdmin(TranslationAdmin):
-    list_display = ('id', 'username', 'my_money', 'user_lang')
-    list_display_links = ('id', 'username')
-    search_fields = ('id', 'username', 'email')
+    list_display = ('id', 'username', 'my_money', 'user_lang', 'generate_id')
+    list_display_links = ('id', 'username', 'generate_id')
+    search_fields = ('id', 'username', 'email', 'generate_id')
 
 
 @admin.register(VIPPackage)

@@ -21,6 +21,7 @@ class CustomUser(models.Model):
     email = models.EmailField(max_length=255, blank=True, null=True)
     referral_link = models.CharField(max_length=255, blank=True, null=True)
     team = models.ManyToManyField("self", blank=True, symmetrical=False)
+    generate_id = models.CharField(max_length=10, unique=True, blank=True, null=True)  # New field for generated ID
 
     class Meta:
         verbose_name = _("User")
