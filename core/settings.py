@@ -26,7 +26,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'bot',
     'account',
-    'vippacet'
+
 ]
 
 MIDDLEWARE = [
@@ -85,8 +85,9 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-LANGUAGE_CODE = 'ru'
+LANGUAGE_CODE = 'uz'
 LANGUAGES = (
+    ('uz', 'Uzbek'),
     ('en', 'English'),
     ('ru', 'Русский'),
 )
