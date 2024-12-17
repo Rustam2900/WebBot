@@ -54,11 +54,12 @@ default_languages = {
         "my_orders": "📦 My Orders",
         "contact_us": "📲 Contact Us",
         "settings": "⚙️ Settings",
-        "full_name": "Please enter your full name",
+        "ID": "ID",
         "contact": "Please enter your number, Example: +998 93 068 29 11",
         "contact_update": "Your phone number has been successfully updated:",
         "successful_registration": "Successfully registered",
-        "sorry": "Sorry, try another number"
+        "sorry": "Sorry, try another number",
+        'invalid_id': "Sorry, the ID you provided is incorrect. Please try again.",
     },
 
     "ru": {
@@ -105,11 +106,12 @@ default_languages = {
         "my_orders": "📦 Мои заказы",
         "contact_us": "📲 Свяжитесь с нами",
         "settings": "⚙️ Настройки",
-        "full_name": "Пожалуйста, введите полное имя",
+        "ID": "ID",
         "contact": "Пожалуйста, введите номер, пример: +998 93 068 29 11",
         "contact_update": "Ваш номер телефона успешно обновлен:",
         "successful_registration": "Успешно зарегистрировано",
-        "sorry": "Извините, попробуйте другой номер"
+        "sorry": "Извините, попробуйте другой номер",
+        "invalid_id": "Извините, указанный вами идентификатор неверен. Попробуйте еще раз."
     }
 
 }

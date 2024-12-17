@@ -315,3 +315,125 @@ aiogram.exceptions.TelegramNetworkError: HTTP Client says - ClientConnectionErro
 2024-12-13 18:17:31,003 - aiogram.event - INFO - Update id=970455559 is handled. Duration 218 ms by bot id=7495355868
 2024-12-13 18:17:34,084 - aiogram.event - INFO - Update id=970455560 is handled. Duration 125 ms by bot id=7495355868
 2024-12-13 18:17:35,944 - aiogram.event - INFO - Update id=970455561 is handled. Duration 282 ms by bot id=7495355868
+2024-12-15 01:45:27,969 - bot.management.commands.run_bot - INFO - Buyruqlar o'rnatildi.
+2024-12-15 01:45:27,970 - bot.management.commands.run_bot - INFO - Router ulandi.
+2024-12-15 01:45:28,179 - root - ERROR - Xabarni yuborishda xatolik yuz berdi: Telegram server says - Bad Request: chat not found
+2024-12-15 01:45:28,298 - root - ERROR - Xabarni yuborishda xatolik yuz berdi: Telegram server says - Bad Request: chat not found
+2024-12-15 01:45:28,430 - root - ERROR - Xabarni yuborishda xatolik yuz berdi: Telegram server says - Bad Request: chat not found
+2024-12-15 01:45:28,430 - root - INFO - Hamma foydalanuvchilarga bot ishga tushgani haqida xabar yuborildi.
+2024-12-15 01:45:28,431 - aiogram.dispatcher - INFO - Start polling
+2024-12-15 01:45:28,542 - aiogram.dispatcher - INFO - Run polling for bot @CryptoCunsershipBot id=7495355868 - 'crypto-cunsership'
+2024-12-15 01:45:52,758 - aiogram.event - INFO - Update id=970455563 is handled. Duration 375 ms by bot id=7495355868
+2024-12-15 01:45:56,738 - aiogram.event - INFO - Update id=970455564 is handled. Duration 469 ms by bot id=7495355868
+2024-12-15 01:46:14,289 - aiogram.event - INFO - Update id=970455565 is not handled. Duration 16 ms by bot id=7495355868
+2024-12-15 01:46:14,290 - aiogram.event - ERROR - Cause exception while process update id=970455565 by bot id=7495355868
+AttributeError: 'CustomUser' object has no attribute 'fullname'
+Traceback (most recent call last):
+  File "C:\Users\user\Desktop\WebBot\venv\Lib\site-packages\aiogram\dispatcher\dispatcher.py", line 309, in _process_update
+    response = await self.feed_update(bot, update, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Desktop\WebBot\venv\Lib\site-packages\aiogram\dispatcher\dispatcher.py", line 158, in feed_update
+    response = await self.update.wrap_outer_middleware(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Desktop\WebBot\venv\Lib\site-packages\aiogram\dispatcher\middlewares\error.py", line 25, in __call__
+    return await handler(event, data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Desktop\WebBot\venv\Lib\site-packages\aiogram\dispatcher\middlewares\user_context.py", line 27, in __call__
+    return await handler(event, data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Desktop\WebBot\venv\Lib\site-packages\aiogram\fsm\middleware.py", line 41, in __call__
+    return await handler(event, data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Desktop\WebBot\venv\Lib\site-packages\aiogram\dispatcher\event\telegram.py", line 121, in trigger
+    return await wrapped_inner(event, kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Desktop\WebBot\venv\Lib\site-packages\aiogram\dispatcher\event\handler.py", line 43, in call
+    return await wrapped()
+           ^^^^^^^^^^^^^^^
+  File "C:\Users\user\Desktop\WebBot\venv\Lib\site-packages\aiogram\dispatcher\dispatcher.py", line 276, in _listen_update
+    return await self.propagate_event(update_type=update_type, event=event, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Desktop\WebBot\venv\Lib\site-packages\aiogram\dispatcher\router.py", line 128, in propagate_event
+    return await observer.wrap_outer_middleware(_wrapped, event=event, data=kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Desktop\WebBot\venv\Lib\site-packages\aiogram\dispatcher\router.py", line 123, in _wrapped
+    return await self._propagate_event(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Desktop\WebBot\venv\Lib\site-packages\aiogram\dispatcher\router.py", line 156, in _propagate_event
+    response = await router.propagate_event(update_type=update_type, event=event, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Desktop\WebBot\venv\Lib\site-packages\aiogram\dispatcher\router.py", line 128, in propagate_event
+    return await observer.wrap_outer_middleware(_wrapped, event=event, data=kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Desktop\WebBot\venv\Lib\site-packages\aiogram\dispatcher\router.py", line 123, in _wrapped
+    return await self._propagate_event(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Desktop\WebBot\venv\Lib\site-packages\aiogram\dispatcher\router.py", line 156, in _propagate_event
+    response = await router.propagate_event(update_type=update_type, event=event, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Desktop\WebBot\venv\Lib\site-packages\aiogram\dispatcher\router.py", line 128, in propagate_event
+    return await observer.wrap_outer_middleware(_wrapped, event=event, data=kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Desktop\WebBot\venv\Lib\site-packages\aiogram\dispatcher\router.py", line 123, in _wrapped
+    return await self._propagate_event(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Desktop\WebBot\venv\Lib\site-packages\aiogram\dispatcher\router.py", line 148, in _propagate_event
+    response = await observer.trigger(event, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Desktop\WebBot\venv\Lib\site-packages\aiogram\dispatcher\event\telegram.py", line 121, in trigger
+    return await wrapped_inner(event, kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Desktop\WebBot\venv\Lib\site-packages\aiogram\dispatcher\event\handler.py", line 43, in call
+    return await wrapped()
+           ^^^^^^^^^^^^^^^
+  File "C:\Users\user\Desktop\WebBot\bot\headers\handlers.py", line 64, in reg_user_contact
+    full_name = user.fullname if user.fullname else message.from_user.username
+                                 ^^^^^^^^^^^^^
+AttributeError: 'CustomUser' object has no attribute 'fullname'
+2024-12-15 01:47:32,420 - aiogram.dispatcher - INFO - Polling stopped
+2024-12-15 01:47:32,780 - root - ERROR - Xabarni yuborishda xatolik yuz berdi: Telegram server says - Bad Request: chat not found
+2024-12-15 01:47:32,898 - root - ERROR - Xabarni yuborishda xatolik yuz berdi: Telegram server says - Bad Request: chat not found
+2024-12-15 01:47:33,022 - root - ERROR - Xabarni yuborishda xatolik yuz berdi: Telegram server says - Bad Request: chat not found
+2024-12-15 01:47:33,158 - root - INFO - Hamma foydalanuvchilarga bot ishdan to'xtagani haqida xabar yuborildi.
+2024-12-15 01:47:33,408 - aiogram.dispatcher - INFO - Polling stopped for bot @CryptoCunsershipBot id=7495355868 - 'crypto-cunsership'
+2024-12-15 01:47:39,989 - bot.management.commands.run_bot - INFO - Buyruqlar o'rnatildi.
+2024-12-15 01:47:39,990 - bot.management.commands.run_bot - INFO - Router ulandi.
+2024-12-15 01:47:40,212 - root - ERROR - Xabarni yuborishda xatolik yuz berdi: Telegram server says - Bad Request: chat not found
+2024-12-15 01:47:40,349 - root - ERROR - Xabarni yuborishda xatolik yuz berdi: Telegram server says - Bad Request: chat not found
+2024-12-15 01:47:40,491 - root - ERROR - Xabarni yuborishda xatolik yuz berdi: Telegram server says - Bad Request: chat not found
+2024-12-15 01:47:40,659 - root - INFO - Hamma foydalanuvchilarga bot ishga tushgani haqida xabar yuborildi.
+2024-12-15 01:47:40,659 - aiogram.dispatcher - INFO - Start polling
+2024-12-15 01:47:40,770 - aiogram.dispatcher - INFO - Run polling for bot @CryptoCunsershipBot id=7495355868 - 'crypto-cunsership'
+2024-12-15 01:47:46,575 - aiogram.event - INFO - Update id=970455566 is handled. Duration 405 ms by bot id=7495355868
+2024-12-15 01:48:15,448 - aiogram.event - INFO - Update id=970455567 is handled. Duration 328 ms by bot id=7495355868
+2024-12-15 01:48:17,633 - aiogram.event - INFO - Update id=970455568 is handled. Duration 437 ms by bot id=7495355868
+2024-12-15 01:48:27,026 - aiogram.event - INFO - Update id=970455569 is handled. Duration 233 ms by bot id=7495355868
+2024-12-15 02:21:12,699 - aiogram.dispatcher - ERROR - Failed to fetch updates - TelegramNetworkError: HTTP Client says - Request timeout error
+2024-12-15 02:21:12,723 - aiogram.dispatcher - WARNING - Sleep for 1.000000 seconds and try again... (tryings = 0, bot id = 7495355868)
+2024-12-15 02:29:28,754 - aiogram.dispatcher - ERROR - Failed to fetch updates - TelegramNetworkError: HTTP Client says - Request timeout error
+2024-12-15 02:29:28,756 - aiogram.dispatcher - WARNING - Sleep for 1.194843 seconds and try again... (tryings = 1, bot id = 7495355868)
+2024-12-15 02:29:29,962 - aiogram.dispatcher - ERROR - Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [getaddrinfo failed]
+2024-12-15 02:29:29,963 - aiogram.dispatcher - WARNING - Sleep for 1.632665 seconds and try again... (tryings = 2, bot id = 7495355868)
+2024-12-15 02:29:31,609 - aiogram.dispatcher - ERROR - Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [getaddrinfo failed]
+2024-12-15 02:29:31,609 - aiogram.dispatcher - WARNING - Sleep for 2.075254 seconds and try again... (tryings = 3, bot id = 7495355868)
+2024-12-15 02:29:33,700 - aiogram.dispatcher - ERROR - Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [getaddrinfo failed]
+2024-12-15 02:29:33,700 - aiogram.dispatcher - WARNING - Sleep for 2.561817 seconds and try again... (tryings = 4, bot id = 7495355868)
+2024-12-15 02:50:49,248 - aiogram.dispatcher - ERROR - Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [getaddrinfo failed]
+2024-12-15 02:50:49,252 - aiogram.dispatcher - WARNING - Sleep for 3.441175 seconds and try again... (tryings = 5, bot id = 7495355868)
+2024-12-15 02:50:52,714 - aiogram.dispatcher - ERROR - Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [getaddrinfo failed]
+2024-12-15 02:50:52,715 - aiogram.dispatcher - WARNING - Sleep for 4.405368 seconds and try again... (tryings = 6, bot id = 7495355868)
+2024-12-15 11:19:00,010 - aiogram.dispatcher - ERROR - Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [getaddrinfo failed]
+2024-12-15 11:19:00,011 - aiogram.dispatcher - WARNING - Sleep for 5.128051 seconds and try again... (tryings = 7, bot id = 7495355868)
+2024-12-17 11:07:06,888 - aiogram.dispatcher - ERROR - Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [getaddrinfo failed]
+2024-12-17 11:07:06,891 - aiogram.dispatcher - WARNING - Sleep for 5.028669 seconds and try again... (tryings = 8, bot id = 7495355868)
+2024-12-17 11:07:11,942 - aiogram.dispatcher - ERROR - Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [getaddrinfo failed]
+2024-12-17 11:07:11,946 - aiogram.dispatcher - WARNING - Sleep for 5.197086 seconds and try again... (tryings = 9, bot id = 7495355868)
+2024-12-17 11:07:17,160 - aiogram.dispatcher - ERROR - Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [getaddrinfo failed]
+2024-12-17 11:07:17,178 - aiogram.dispatcher - WARNING - Sleep for 5.078972 seconds and try again... (tryings = 10, bot id = 7495355868)
+2024-12-17 11:07:22,266 - aiogram.dispatcher - ERROR - Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [getaddrinfo failed]
+2024-12-17 11:07:22,267 - aiogram.dispatcher - WARNING - Sleep for 4.765051 seconds and try again... (tryings = 11, bot id = 7495355868)
+2024-12-17 11:07:27,044 - aiogram.dispatcher - ERROR - Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [getaddrinfo failed]
+2024-12-17 11:07:27,044 - aiogram.dispatcher - WARNING - Sleep for 4.843965 seconds and try again... (tryings = 12, bot id = 7495355868)
+2024-12-17 11:07:31,904 - aiogram.dispatcher - ERROR - Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [getaddrinfo failed]
+2024-12-17 11:07:31,904 - aiogram.dispatcher - WARNING - Sleep for 4.854345 seconds and try again... (tryings = 13, bot id = 7495355868)
+2024-12-17 11:07:47,147 - aiogram.dispatcher - INFO - Connection established (tryings = 14, bot id = 7495355868)

@@ -19,8 +19,6 @@ from aiogram.client.default import DefaultBotProperties
 router = Router()
 bot = Bot(token=settings.BOT_TOKEN, default=DefaultBotProperties(parse_mode=ParseMode.HTML))
 
-phone_number_validator = re.compile(r'^\+998\s?\d{2}\s?\d{3}\s?\d{2}\s?\d{2}$')
-
 
 @router.message(CommandStart())
 async def welcome(message: Message):
@@ -49,59 +47,24 @@ async def get_query_languages(call: CallbackQuery, state: FSMContext):
     await save_user_language(user_id, user_lang)
 
     await bot.answer_callback_query(call.id)
-    await state.set_state(UserStates.name)
+    await state.set_state(UserStates.ID)
 
-    text = default_languages[user_lang]['full_name']
+    text = default_languages[user_lang]['ID']
     await call.message.answer(text, reply_markup=None)
 
 
-@router.message(UserStates.name)
+@router.message(UserStates.ID)
 async def reg_user_contact(message: Message, state: FSMContext):
     user_id = message.from_user.id
     user_lang = user_languages.get(user_id, 'uz')
 
-    await state.update_data(name=message.text)
-    await state.set_state(UserStates.contact)
-
-    text = default_languages.get(user_lang, {}).get('contact', 'Iltimos raqamiz kiriting Namuna: +998 93 068 29 11')
-    await message.answer(text)
-
-
-@router.message(UserStates.contact)
-async def company_contact(message: Message, state: FSMContext):
-    user_id = message.from_user.id
-    user_lang = user_languages.get(user_id, 'uz')
-
-    if message.contact:
-        phone = fix_phone(message.contact.phone_number)
+    input_id = message.text.strip()
+    user = await CustomUser.objects.filter(generate_id=input_id).afirst()
+    if user:
+        full_name = user.full_name if user.full_name else message.from_user.username
+        text = f"{user_lang.upper()}:\nXush kelibsiz, {full_name}!"
+        await message.answer(text=text, reply_markup=get_main_menu(user_lang), parse_mode="HTML")
+        await state.clear()
     else:
-        phone = fix_phone(message.text)
-
-    if not phone_number_validator.match(phone):
-        error_message = default_languages[user_lang]['contact']
-
-        await message.answer(error_message)
-        return
-
-    await state.update_data(company_contact=phone)
-
-    state_data = await state.get_data()
-    user_data = {
-        "full_name": state_data.get('name'),
-        "phone_number": phone,
-        "username": message.from_user.username,
-        "user_lang": user_lang,
-        "telegram_id": user_id,
-        "tg_username": f"https://t.me/{message.from_user.username}",
-    }
-
-    try:
-        await save_user_info_to_db(user_data)
-        success_message = default_languages[user_lang]['successful_registration']
-        await message.answer(text=success_message, reply_markup=get_main_menu(user_lang))
-
-    except Exception as e:
-        error_message = default_languages[user_lang]['successful_registration']
-        await message.answer(text=error_message)
-
-    await state.clear()
+        error_text = default_languages[user_lang]['invalid_id']
+        await message.answer(text=error_text, reply_markup=None, parse_mode="HTML")
