@@ -15,7 +15,7 @@ class CustomUser(models.Model):
     telegram_id = models.CharField(max_length=255, blank=True, null=True, unique=True)
     tg_username = models.CharField(_("Telegram Username"), max_length=255, blank=True, null=True, unique=True)
     created_at = models.DateTimeField(auto_now_add=True)
-    my_money = models.DecimalField(max_digits=20, decimal_places=2, default=0.0)
+    my_money = models.DecimalField(max_digits=20, decimal_places=7, default=0.0)
     image = models.ImageField(upload_to='static/account/images', null=True, blank=True)
     bio = models.TextField(max_length=300, null=True, blank=True)
     email = models.EmailField(max_length=255, blank=True, null=True)
