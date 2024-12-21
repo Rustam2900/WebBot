@@ -28,22 +28,16 @@ def get_main_menu(user_lang):
     return main_menu_keyboard
 
 
-def get_admin_menu(user_lang):
+def get_admin_menu():
     admin_menu_keyboard = ReplyKeyboardMarkup(keyboard=[
         [
             KeyboardButton(text="👤Statistika"),
             KeyboardButton(text="✍️ Habar yuborish")
         ],
-        [
-            KeyboardButton(text="➕ Mahsulot qo'shish"),
-            KeyboardButton(text="➖ Mahsulot o'chirish")
-        ],
-        [
-            KeyboardButton(text="💸 Min Summa"),
-            KeyboardButton(text="🚫 Foydalanuvchini bloklash")
-        ],
-        [
-            KeyboardButton(text="🚫 Foydalanuvchini blokdan ochish")
-        ]
+        # [
+        #     KeyboardButton(text="Admin add"),
+        #     KeyboardButton(text="Admin delete")
+        # ]
+
     ], resize_keyboard=True)
     return admin_menu_keyboard
