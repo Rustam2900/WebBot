@@ -5,10 +5,10 @@ message_history = {}
 default_languages = {
     "language_not_found": "Siz to'g'ri tilni tanlamadingiz!\n"
                           "Сиз тўғри тилни танламадингиз!",
-    "welcome_message": "Assalomu alaykum, xush kelibsiz!\n"
-                       "Quyidagi tillardan birini tanlang!\n\n"
-                       "Ассалому алайкум, хуш келибсиз!\n"
-                       "Қуйидаги тиллардан бирини танланг!",
+    "welcome_message": "Hello and welcome!\n"
+                       "Choose one of the languages below!\n\n"
+                       "Привет и добро пожаловать!\n"
+                       "Выберите один из языков ниже!",
 
     "en": {
         "not": "❌ You cannot use the bot, you are blacklisted.\n"
@@ -60,6 +60,11 @@ default_languages = {
         "successful_registration": "Successfully registered",
         "sorry": "Sorry, try another number",
         'invalid_id': "Sorry, the ID you provided is incorrect. Please try again.",
+
+        "deposit_money": "deposit money",
+        "issuing_money": "issuing money",
+        "statistics": "Statistics",
+        "already_linked": "You are trying to access someone else's account. Access denied."
     },
 
     "ru": {
@@ -111,7 +116,12 @@ default_languages = {
         "contact_update": "Ваш номер телефона успешно обновлен:",
         "successful_registration": "Успешно зарегистрировано",
         "sorry": "Извините, попробуйте другой номер",
-        "invalid_id": "Извините, указанный вами идентификатор неверен. Попробуйте еще раз."
+        "invalid_id": "Извините, указанный вами идентификатор неверен. Попробуйте еще раз.",
+
+        "deposit_money": "вносить деньги",
+        "issuing_money": "выпуск денег",
+        "statistics": "Статистика",
+        "already_linked": "Вы пытаетесь получить доступ к чужому аккаунту. Доступ запрещен.",
     }
 
 }
@@ -121,16 +131,16 @@ local_user = {}
 
 introduction_template = {
     'en': """
-<b>💧 Ruqiya Shifo suvi</b>
-Tanangiz va ruhingiz salomatligi uchun Ruqiya qilingan tabiiy toza ichimlik suvi.
+<b>Welcome to the bot</b>
+You can withdraw money from your account or buy a VIP package.
 
-<b>🚛 Yetkazib berish bepul</b>
+<b>Earn more money</b>
 """,
     'ru': """
-<b>💧 Руқия Шифо суви</b>  
-Танангиз ва руҳингиз саломатлиги учун Руқия қилинган табиий тоза ичимлик суви.  
+<b>Добро пожаловать в бот</b>  
+Вы можете вывести деньги со своего счета или купить VIP-пакет.  
 
-<b>🚛 Етказиб бериш бепул</b>
+<b>Зарабатывайте больше денег</b>
 """
 }
 

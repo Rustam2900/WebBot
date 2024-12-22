@@ -7,10 +7,6 @@ from bot.validators import phone_number_validator
 class CustomUser(models.Model):
     full_name = models.CharField(_("Full Name"), max_length=255, blank=True)
     username = models.CharField(_("Username"), max_length=255, blank=True, null=True)
-    phone_number = models.CharField(
-        max_length=20, blank=True, unique=True,
-        validators=[phone_number_validator]
-    )
     user_lang = models.CharField(max_length=10, blank=True, null=True)
     telegram_id = models.CharField(max_length=255, blank=True, null=True, unique=True)
     tg_username = models.CharField(_("Telegram Username"), max_length=255, blank=True, null=True, unique=True)

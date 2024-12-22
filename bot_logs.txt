@@ -1,0 +1,307 @@
+2024-12-22 00:08:16,031 - bot.management.commands.run_bot - INFO - Buyruqlar o'rnatildi.
+2024-12-22 00:08:16,031 - bot.management.commands.run_bot - INFO - Router ulandi.
+2024-12-22 00:08:16,116 - root - INFO - Hamma foydalanuvchilarga bot ishga tushgani haqida xabar yuborildi.
+2024-12-22 00:08:16,117 - aiogram.dispatcher - INFO - Start polling
+2024-12-22 00:08:16,236 - aiogram.dispatcher - INFO - Run polling for bot @CryptoCunsershipBot id=7495355868 - 'crypto-cunsership'
+2024-12-22 00:08:54,053 - aiogram.event - INFO - Update id=970455573 is handled. Duration 484 ms by bot id=7495355868
+2024-12-22 00:09:01,581 - aiogram.event - INFO - Update id=970455574 is handled. Duration 125 ms by bot id=7495355868
+2024-12-22 00:09:05,313 - aiogram.event - INFO - Update id=970455575 is handled. Duration 422 ms by bot id=7495355868
+2024-12-22 00:09:15,102 - aiogram.event - INFO - Update id=970455576 is handled. Duration 141 ms by bot id=7495355868
+2024-12-22 00:10:50,972 - aiogram.event - INFO - Update id=970455577 is handled. Duration 358 ms by bot id=7495355868
+2024-12-22 00:11:20,326 - aiogram.event - INFO - Update id=970455578 is not handled. Duration 0 ms by bot id=7495355868
+2024-12-22 00:11:20,329 - aiogram.event - ERROR - Cause exception while process update id=970455578 by bot id=7495355868
+TypeError: get_main_menu() missing 1 required positional argument: 'user_lang'
+Traceback (most recent call last):
+  File "C:\Users\user\Desktop\WebBot\venv\Lib\site-packages\aiogram\dispatcher\dispatcher.py", line 309, in _process_update
+    response = await self.feed_update(bot, update, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Desktop\WebBot\venv\Lib\site-packages\aiogram\dispatcher\dispatcher.py", line 158, in feed_update
+    response = await self.update.wrap_outer_middleware(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Desktop\WebBot\venv\Lib\site-packages\aiogram\dispatcher\middlewares\error.py", line 25, in __call__
+    return await handler(event, data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Desktop\WebBot\venv\Lib\site-packages\aiogram\dispatcher\middlewares\user_context.py", line 27, in __call__
+    return await handler(event, data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Desktop\WebBot\venv\Lib\site-packages\aiogram\fsm\middleware.py", line 41, in __call__
+    return await handler(event, data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Desktop\WebBot\venv\Lib\site-packages\aiogram\dispatcher\event\telegram.py", line 121, in trigger
+    return await wrapped_inner(event, kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Desktop\WebBot\venv\Lib\site-packages\aiogram\dispatcher\event\handler.py", line 43, in call
+    return await wrapped()
+           ^^^^^^^^^^^^^^^
+  File "C:\Users\user\Desktop\WebBot\venv\Lib\site-packages\aiogram\dispatcher\dispatcher.py", line 276, in _listen_update
+    return await self.propagate_event(update_type=update_type, event=event, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Desktop\WebBot\venv\Lib\site-packages\aiogram\dispatcher\router.py", line 128, in propagate_event
+    return await observer.wrap_outer_middleware(_wrapped, event=event, data=kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Desktop\WebBot\venv\Lib\site-packages\aiogram\dispatcher\router.py", line 123, in _wrapped
+    return await self._propagate_event(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Desktop\WebBot\venv\Lib\site-packages\aiogram\dispatcher\router.py", line 156, in _propagate_event
+    response = await router.propagate_event(update_type=update_type, event=event, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Desktop\WebBot\venv\Lib\site-packages\aiogram\dispatcher\router.py", line 128, in propagate_event
+    return await observer.wrap_outer_middleware(_wrapped, event=event, data=kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Desktop\WebBot\venv\Lib\site-packages\aiogram\dispatcher\router.py", line 123, in _wrapped
+    return await self._propagate_event(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Desktop\WebBot\venv\Lib\site-packages\aiogram\dispatcher\router.py", line 156, in _propagate_event
+    response = await router.propagate_event(update_type=update_type, event=event, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Desktop\WebBot\venv\Lib\site-packages\aiogram\dispatcher\router.py", line 128, in propagate_event
+    return await observer.wrap_outer_middleware(_wrapped, event=event, data=kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Desktop\WebBot\venv\Lib\site-packages\aiogram\dispatcher\router.py", line 123, in _wrapped
+    return await self._propagate_event(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Desktop\WebBot\venv\Lib\site-packages\aiogram\dispatcher\router.py", line 148, in _propagate_event
+    response = await observer.trigger(event, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Desktop\WebBot\venv\Lib\site-packages\aiogram\dispatcher\event\telegram.py", line 121, in trigger
+    return await wrapped_inner(event, kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Desktop\WebBot\venv\Lib\site-packages\aiogram\dispatcher\event\handler.py", line 43, in call
+    return await wrapped()
+           ^^^^^^^^^^^^^^^
+  File "C:\Users\user\Desktop\WebBot\bot\headers\AdminBot.py", line 40, in admin
+    main_menu_markup = get_main_menu()
+                       ^^^^^^^^^^^^^^^
+TypeError: get_main_menu() missing 1 required positional argument: 'user_lang'
+2024-12-22 00:11:33,506 - aiogram.event - INFO - Update id=970455579 is not handled. Duration 0 ms by bot id=7495355868
+2024-12-22 00:11:33,508 - aiogram.event - ERROR - Cause exception while process update id=970455579 by bot id=7495355868
+TypeError: get_main_menu() missing 1 required positional argument: 'user_lang'
+Traceback (most recent call last):
+  File "C:\Users\user\Desktop\WebBot\venv\Lib\site-packages\aiogram\dispatcher\dispatcher.py", line 309, in _process_update
+    response = await self.feed_update(bot, update, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Desktop\WebBot\venv\Lib\site-packages\aiogram\dispatcher\dispatcher.py", line 158, in feed_update
+    response = await self.update.wrap_outer_middleware(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Desktop\WebBot\venv\Lib\site-packages\aiogram\dispatcher\middlewares\error.py", line 25, in __call__
+    return await handler(event, data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Desktop\WebBot\venv\Lib\site-packages\aiogram\dispatcher\middlewares\user_context.py", line 27, in __call__
+    return await handler(event, data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Desktop\WebBot\venv\Lib\site-packages\aiogram\fsm\middleware.py", line 41, in __call__
+    return await handler(event, data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Desktop\WebBot\venv\Lib\site-packages\aiogram\dispatcher\event\telegram.py", line 121, in trigger
+    return await wrapped_inner(event, kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Desktop\WebBot\venv\Lib\site-packages\aiogram\dispatcher\event\handler.py", line 43, in call
+    return await wrapped()
+           ^^^^^^^^^^^^^^^
+  File "C:\Users\user\Desktop\WebBot\venv\Lib\site-packages\aiogram\dispatcher\dispatcher.py", line 276, in _listen_update
+    return await self.propagate_event(update_type=update_type, event=event, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Desktop\WebBot\venv\Lib\site-packages\aiogram\dispatcher\router.py", line 128, in propagate_event
+    return await observer.wrap_outer_middleware(_wrapped, event=event, data=kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Desktop\WebBot\venv\Lib\site-packages\aiogram\dispatcher\router.py", line 123, in _wrapped
+    return await self._propagate_event(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Desktop\WebBot\venv\Lib\site-packages\aiogram\dispatcher\router.py", line 156, in _propagate_event
+    response = await router.propagate_event(update_type=update_type, event=event, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Desktop\WebBot\venv\Lib\site-packages\aiogram\dispatcher\router.py", line 128, in propagate_event
+    return await observer.wrap_outer_middleware(_wrapped, event=event, data=kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Desktop\WebBot\venv\Lib\site-packages\aiogram\dispatcher\router.py", line 123, in _wrapped
+    return await self._propagate_event(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Desktop\WebBot\venv\Lib\site-packages\aiogram\dispatcher\router.py", line 156, in _propagate_event
+    response = await router.propagate_event(update_type=update_type, event=event, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Desktop\WebBot\venv\Lib\site-packages\aiogram\dispatcher\router.py", line 128, in propagate_event
+    return await observer.wrap_outer_middleware(_wrapped, event=event, data=kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Desktop\WebBot\venv\Lib\site-packages\aiogram\dispatcher\router.py", line 123, in _wrapped
+    return await self._propagate_event(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Desktop\WebBot\venv\Lib\site-packages\aiogram\dispatcher\router.py", line 148, in _propagate_event
+    response = await observer.trigger(event, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Desktop\WebBot\venv\Lib\site-packages\aiogram\dispatcher\event\telegram.py", line 121, in trigger
+    return await wrapped_inner(event, kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Desktop\WebBot\venv\Lib\site-packages\aiogram\dispatcher\event\handler.py", line 43, in call
+    return await wrapped()
+           ^^^^^^^^^^^^^^^
+  File "C:\Users\user\Desktop\WebBot\bot\headers\AdminBot.py", line 40, in admin
+    main_menu_markup = get_main_menu()
+                       ^^^^^^^^^^^^^^^
+TypeError: get_main_menu() missing 1 required positional argument: 'user_lang'
+2024-12-22 00:11:58,901 - aiogram.event - INFO - Update id=970455580 is handled. Duration 390 ms by bot id=7495355868
+2024-12-22 00:14:03,539 - aiogram.event - INFO - Update id=970455581 is handled. Duration 436 ms by bot id=7495355868
+2024-12-22 00:14:06,448 - aiogram.event - INFO - Update id=970455582 is handled. Duration 610 ms by bot id=7495355868
+2024-12-22 00:14:12,123 - aiogram.event - INFO - Update id=970455583 is handled. Duration 202 ms by bot id=7495355868
+2024-12-22 00:29:02,206 - aiogram.dispatcher - ERROR - Failed to fetch updates - TelegramNetworkError: HTTP Client says - Request timeout error
+2024-12-22 00:29:02,207 - aiogram.dispatcher - WARNING - Sleep for 1.000000 seconds and try again... (tryings = 0, bot id = 7495355868)
+2024-12-22 00:29:13,567 - aiogram.dispatcher - INFO - Connection established (tryings = 1, bot id = 7495355868)
+2024-12-22 01:37:40,343 - aiogram.dispatcher - ERROR - Failed to fetch updates - TelegramNetworkError: HTTP Client says - Request timeout error
+2024-12-22 01:37:40,359 - aiogram.dispatcher - WARNING - Sleep for 1.000000 seconds and try again... (tryings = 0, bot id = 7495355868)
+2024-12-22 01:37:51,703 - aiogram.dispatcher - INFO - Connection established (tryings = 1, bot id = 7495355868)
+2024-12-22 02:05:13,587 - aiogram.dispatcher - INFO - Polling stopped
+2024-12-22 02:05:14,006 - root - ERROR - Xabarni yuborishda xatolik yuz berdi: 2 validation errors for SendMessage
+chat_id.int
+  Input should be a valid integer [type=int_type, input_value=None, input_type=NoneType]
+    For further information visit https://errors.pydantic.dev/2.5/v/int_type
+chat_id.str
+  Input should be a valid string [type=string_type, input_value=None, input_type=NoneType]
+    For further information visit https://errors.pydantic.dev/2.5/v/string_type
+2024-12-22 02:05:14,008 - root - INFO - Hamma foydalanuvchilarga bot ishdan to'xtagani haqida xabar yuborildi.
+2024-12-22 02:05:14,296 - aiogram.dispatcher - INFO - Polling stopped for bot @CryptoCunsershipBot id=7495355868 - 'crypto-cunsership'
+2024-12-22 02:12:55,189 - bot.management.commands.run_bot - INFO - Buyruqlar o'rnatildi.
+2024-12-22 02:12:55,190 - bot.management.commands.run_bot - INFO - Router ulandi.
+2024-12-22 02:12:55,402 - root - ERROR - Xabarni yuborishda xatolik yuz berdi: 2 validation errors for SendMessage
+chat_id.int
+  Input should be a valid integer [type=int_type, input_value=None, input_type=NoneType]
+    For further information visit https://errors.pydantic.dev/2.5/v/int_type
+chat_id.str
+  Input should be a valid string [type=string_type, input_value=None, input_type=NoneType]
+    For further information visit https://errors.pydantic.dev/2.5/v/string_type
+2024-12-22 02:12:55,403 - root - INFO - Hamma foydalanuvchilarga bot ishga tushgani haqida xabar yuborildi.
+2024-12-22 02:12:55,403 - aiogram.dispatcher - INFO - Start polling
+2024-12-22 02:12:55,498 - aiogram.dispatcher - INFO - Run polling for bot @CryptoCunsershipBot id=7495355868 - 'crypto-cunsership'
+2024-12-22 02:13:15,002 - aiogram.event - INFO - Update id=970455584 is handled. Duration 327 ms by bot id=7495355868
+2024-12-22 02:13:27,588 - aiogram.event - INFO - Update id=970455585 is handled. Duration 125 ms by bot id=7495355868
+2024-12-22 02:13:32,207 - aiogram.event - INFO - Update id=970455586 is handled. Duration 312 ms by bot id=7495355868
+2024-12-22 02:13:56,711 - aiogram.event - INFO - Update id=970455587 is handled. Duration 389 ms by bot id=7495355868
+2024-12-22 02:19:25,530 - aiogram.event - INFO - Update id=970455588 is handled. Duration 360 ms by bot id=7495355868
+2024-12-22 02:20:16,385 - aiogram.event - INFO - Update id=970455589 is handled. Duration 359 ms by bot id=7495355868
+2024-12-22 02:20:20,029 - aiogram.event - INFO - Update id=970455590 is handled. Duration 250 ms by bot id=7495355868
+2024-12-22 02:20:24,277 - aiogram.event - INFO - Update id=970455591 is handled. Duration 125 ms by bot id=7495355868
+2024-12-22 02:20:41,284 - aiogram.event - INFO - Update id=970455592 is handled. Duration 328 ms by bot id=7495355868
+2024-12-22 02:34:56,749 - aiogram.dispatcher - INFO - Polling stopped
+2024-12-22 02:34:56,780 - root - ERROR - Xabarni yuborishda xatolik yuz berdi: 2 validation errors for SendMessage
+chat_id.int
+  Input should be a valid integer [type=int_type, input_value=None, input_type=NoneType]
+    For further information visit https://errors.pydantic.dev/2.5/v/int_type
+chat_id.str
+  Input should be a valid string [type=string_type, input_value=None, input_type=NoneType]
+    For further information visit https://errors.pydantic.dev/2.5/v/string_type
+2024-12-22 02:34:57,159 - root - INFO - Hamma foydalanuvchilarga bot ishdan to'xtagani haqida xabar yuborildi.
+2024-12-22 02:34:57,447 - aiogram.dispatcher - INFO - Polling stopped for bot @CryptoCunsershipBot id=7495355868 - 'crypto-cunsership'
+2024-12-22 02:35:04,141 - bot.management.commands.run_bot - INFO - Buyruqlar o'rnatildi.
+2024-12-22 02:35:04,142 - bot.management.commands.run_bot - INFO - Router ulandi.
+2024-12-22 02:35:04,218 - root - ERROR - Xabarni yuborishda xatolik yuz berdi: 2 validation errors for SendMessage
+chat_id.int
+  Input should be a valid integer [type=int_type, input_value=None, input_type=NoneType]
+    For further information visit https://errors.pydantic.dev/2.5/v/int_type
+chat_id.str
+  Input should be a valid string [type=string_type, input_value=None, input_type=NoneType]
+    For further information visit https://errors.pydantic.dev/2.5/v/string_type
+2024-12-22 02:35:04,421 - root - INFO - Hamma foydalanuvchilarga bot ishga tushgani haqida xabar yuborildi.
+2024-12-22 02:35:04,421 - aiogram.dispatcher - INFO - Start polling
+2024-12-22 02:35:04,523 - aiogram.dispatcher - INFO - Run polling for bot @CryptoCunsershipBot id=7495355868 - 'crypto-cunsership'
+2024-12-22 02:35:17,240 - aiogram.event - INFO - Update id=970455593 is handled. Duration 312 ms by bot id=7495355868
+2024-12-22 02:35:19,680 - aiogram.event - INFO - Update id=970455594 is handled. Duration 265 ms by bot id=7495355868
+2024-12-22 02:35:23,066 - aiogram.event - INFO - Update id=970455595 is handled. Duration 125 ms by bot id=7495355868
+2024-12-22 02:35:39,205 - aiogram.event - INFO - Update id=970455596 is handled. Duration 375 ms by bot id=7495355868
+2024-12-22 02:35:42,479 - aiogram.event - INFO - Update id=970455597 is handled. Duration 140 ms by bot id=7495355868
+2024-12-22 02:35:48,120 - aiogram.event - INFO - Update id=970455598 is handled. Duration 233 ms by bot id=7495355868
+2024-12-22 02:37:54,544 - aiogram.dispatcher - INFO - Polling stopped
+2024-12-22 02:37:54,546 - root - ERROR - Xabarni yuborishda xatolik yuz berdi: 2 validation errors for SendMessage
+chat_id.int
+  Input should be a valid integer [type=int_type, input_value=None, input_type=NoneType]
+    For further information visit https://errors.pydantic.dev/2.5/v/int_type
+chat_id.str
+  Input should be a valid string [type=string_type, input_value=None, input_type=NoneType]
+    For further information visit https://errors.pydantic.dev/2.5/v/string_type
+2024-12-22 02:37:55,031 - root - INFO - Hamma foydalanuvchilarga bot ishdan to'xtagani haqida xabar yuborildi.
+2024-12-22 02:37:55,280 - aiogram.dispatcher - INFO - Polling stopped for bot @CryptoCunsershipBot id=7495355868 - 'crypto-cunsership'
+2024-12-22 02:38:00,051 - bot.management.commands.run_bot - INFO - Buyruqlar o'rnatildi.
+2024-12-22 02:38:00,051 - bot.management.commands.run_bot - INFO - Router ulandi.
+2024-12-22 02:38:00,392 - root - INFO - Hamma foydalanuvchilarga bot ishga tushgani haqida xabar yuborildi.
+2024-12-22 02:38:00,393 - aiogram.dispatcher - INFO - Start polling
+2024-12-22 02:38:00,487 - aiogram.dispatcher - INFO - Run polling for bot @CryptoCunsershipBot id=7495355868 - 'crypto-cunsership'
+2024-12-22 02:38:17,353 - aiogram.event - INFO - Update id=970455599 is handled. Duration 390 ms by bot id=7495355868
+2024-12-22 02:38:26,105 - aiogram.event - INFO - Update id=970455600 is handled. Duration 187 ms by bot id=7495355868
+2024-12-22 02:39:02,278 - aiogram.event - INFO - Update id=970455601 is handled. Duration 328 ms by bot id=7495355868
+2024-12-22 02:39:04,123 - aiogram.event - INFO - Update id=970455602 is handled. Duration 436 ms by bot id=7495355868
+2024-12-22 02:39:06,983 - aiogram.event - INFO - Update id=970455603 is handled. Duration 125 ms by bot id=7495355868
+2024-12-22 02:39:09,793 - aiogram.event - INFO - Update id=970455604 is handled. Duration 125 ms by bot id=7495355868
+2024-12-22 02:39:12,322 - aiogram.event - INFO - Update id=970455605 is handled. Duration 140 ms by bot id=7495355868
+2024-12-22 02:39:14,647 - aiogram.event - INFO - Update id=970455606 is handled. Duration 172 ms by bot id=7495355868
+2024-12-22 02:39:16,726 - aiogram.event - INFO - Update id=970455607 is handled. Duration 171 ms by bot id=7495355868
+2024-12-22 02:39:18,267 - aiogram.event - INFO - Update id=970455608 is handled. Duration 141 ms by bot id=7495355868
+2024-12-22 02:39:19,930 - aiogram.event - INFO - Update id=970455609 is handled. Duration 140 ms by bot id=7495355868
+2024-12-22 02:39:22,296 - aiogram.event - INFO - Update id=970455610 is handled. Duration 139 ms by bot id=7495355868
+2024-12-22 02:39:26,793 - aiogram.event - INFO - Update id=970455611 is handled. Duration 125 ms by bot id=7495355868
+2024-12-22 02:39:31,171 - aiogram.event - INFO - Update id=970455612 is handled. Duration 125 ms by bot id=7495355868
+2024-12-22 02:39:33,809 - aiogram.event - INFO - Update id=970455613 is handled. Duration 140 ms by bot id=7495355868
+2024-12-22 02:39:35,427 - aiogram.event - INFO - Update id=970455614 is handled. Duration 125 ms by bot id=7495355868
+2024-12-22 02:39:37,465 - aiogram.event - INFO - Update id=970455615 is handled. Duration 125 ms by bot id=7495355868
+2024-12-22 02:39:40,412 - aiogram.event - INFO - Update id=970455616 is handled. Duration 125 ms by bot id=7495355868
+2024-12-22 02:39:42,777 - aiogram.event - INFO - Update id=970455617 is handled. Duration 140 ms by bot id=7495355868
+2024-12-22 02:39:44,385 - aiogram.event - INFO - Update id=970455618 is handled. Duration 187 ms by bot id=7495355868
+2024-12-22 02:39:46,599 - aiogram.event - INFO - Update id=970455619 is handled. Duration 202 ms by bot id=7495355868
+2024-12-22 02:39:48,355 - aiogram.event - INFO - Update id=970455620 is handled. Duration 140 ms by bot id=7495355868
+2024-12-22 02:39:50,188 - aiogram.event - INFO - Update id=970455621 is handled. Duration 155 ms by bot id=7495355868
+2024-12-22 02:39:58,383 - aiogram.event - INFO - Update id=970455622 is handled. Duration 141 ms by bot id=7495355868
+2024-12-22 02:40:02,742 - aiogram.event - INFO - Update id=970455623 is handled. Duration 139 ms by bot id=7495355868
+2024-12-22 02:40:05,289 - aiogram.event - INFO - Update id=970455624 is handled. Duration 187 ms by bot id=7495355868
+2024-12-22 02:40:07,261 - aiogram.event - INFO - Update id=970455625 is handled. Duration 125 ms by bot id=7495355868
+2024-12-22 02:46:39,256 - aiogram.event - INFO - Update id=970455626 is handled. Duration 358 ms by bot id=7495355868
+2024-12-22 02:56:51,480 - aiogram.dispatcher - INFO - Polling stopped
+2024-12-22 02:56:52,033 - root - INFO - Hamma foydalanuvchilarga bot ishdan to'xtagani haqida xabar yuborildi.
+2024-12-22 02:56:52,290 - aiogram.dispatcher - INFO - Polling stopped for bot @CryptoCunsershipBot id=7495355868 - 'crypto-cunsership'
+2024-12-22 02:56:57,970 - bot.management.commands.run_bot - INFO - Buyruqlar o'rnatildi.
+2024-12-22 02:56:57,971 - bot.management.commands.run_bot - INFO - Router ulandi.
+2024-12-22 02:56:58,319 - root - INFO - Hamma foydalanuvchilarga bot ishga tushgani haqida xabar yuborildi.
+2024-12-22 02:56:58,320 - aiogram.dispatcher - INFO - Start polling
+2024-12-22 02:56:58,438 - aiogram.dispatcher - INFO - Run polling for bot @CryptoCunsershipBot id=7495355868 - 'crypto-cunsership'
+2024-12-22 02:57:00,298 - aiogram.dispatcher - INFO - Polling stopped
+2024-12-22 02:57:00,855 - root - INFO - Hamma foydalanuvchilarga bot ishdan to'xtagani haqida xabar yuborildi.
+2024-12-22 02:57:01,115 - aiogram.dispatcher - INFO - Polling stopped for bot @CryptoCunsershipBot id=7495355868 - 'crypto-cunsership'
+2024-12-22 02:57:17,584 - bot.management.commands.run_bot - INFO - Buyruqlar o'rnatildi.
+2024-12-22 02:57:17,586 - bot.management.commands.run_bot - INFO - Router ulandi.
+2024-12-22 02:57:17,929 - root - INFO - Hamma foydalanuvchilarga bot ishga tushgani haqida xabar yuborildi.
+2024-12-22 02:57:17,930 - aiogram.dispatcher - INFO - Start polling
+2024-12-22 02:57:18,050 - aiogram.dispatcher - INFO - Run polling for bot @CryptoCunsershipBot id=7495355868 - 'crypto-cunsership'
+2024-12-22 02:57:26,408 - aiogram.event - INFO - Update id=970455627 is handled. Duration 344 ms by bot id=7495355868
+2024-12-22 02:57:28,268 - aiogram.event - INFO - Update id=970455628 is handled. Duration 266 ms by bot id=7495355868
+2024-12-22 02:57:35,245 - aiogram.event - INFO - Update id=970455629 is handled. Duration 250 ms by bot id=7495355868
+2024-12-22 02:57:39,256 - aiogram.event - INFO - Update id=970455630 is handled. Duration 125 ms by bot id=7495355868
+2024-12-22 02:57:44,200 - aiogram.event - INFO - Update id=970455631 is handled. Duration 140 ms by bot id=7495355868
+2024-12-22 02:57:48,144 - aiogram.event - INFO - Update id=970455632 is handled. Duration 125 ms by bot id=7495355868
+2024-12-22 02:58:57,931 - aiogram.event - INFO - Update id=970455633 is handled. Duration 421 ms by bot id=7495355868
+2024-12-22 02:58:59,558 - aiogram.event - INFO - Update id=970455634 is handled. Duration 421 ms by bot id=7495355868
+2024-12-22 02:59:02,837 - aiogram.event - INFO - Update id=970455635 is handled. Duration 139 ms by bot id=7495355868
+2024-12-22 02:59:06,845 - aiogram.event - INFO - Update id=970455636 is handled. Duration 234 ms by bot id=7495355868
+2024-12-22 03:09:51,304 - aiogram.dispatcher - INFO - Polling stopped
+2024-12-22 03:09:51,658 - root - INFO - Hamma foydalanuvchilarga bot ishdan to'xtagani haqida xabar yuborildi.
+2024-12-22 03:09:51,914 - aiogram.dispatcher - INFO - Polling stopped for bot @CryptoCunsershipBot id=7495355868 - 'crypto-cunsership'
+2024-12-22 03:09:57,156 - bot.management.commands.run_bot - INFO - Buyruqlar o'rnatildi.
+2024-12-22 03:09:57,156 - bot.management.commands.run_bot - INFO - Router ulandi.
+2024-12-22 03:09:57,362 - root - INFO - Hamma foydalanuvchilarga bot ishga tushgani haqida xabar yuborildi.
+2024-12-22 03:09:57,362 - aiogram.dispatcher - INFO - Start polling
+2024-12-22 03:09:57,470 - aiogram.dispatcher - INFO - Run polling for bot @CryptoCunsershipBot id=7495355868 - 'crypto-cunsership'
+2024-12-22 03:10:04,242 - aiogram.event - INFO - Update id=970455637 is handled. Duration 389 ms by bot id=7495355868
+2024-12-22 03:10:06,540 - aiogram.event - INFO - Update id=970455638 is handled. Duration 139 ms by bot id=7495355868
+2024-12-22 03:10:11,344 - aiogram.event - INFO - Update id=970455639 is not handled. Duration 0 ms by bot id=7495355868
+2024-12-22 03:12:07,900 - aiogram.dispatcher - INFO - Polling stopped
+2024-12-22 03:12:08,243 - root - INFO - Hamma foydalanuvchilarga bot ishdan to'xtagani haqida xabar yuborildi.
+2024-12-22 03:12:08,510 - aiogram.dispatcher - INFO - Polling stopped for bot @CryptoCunsershipBot id=7495355868 - 'crypto-cunsership'
+2024-12-22 03:12:28,225 - bot.management.commands.run_bot - INFO - Buyruqlar o'rnatildi.
+2024-12-22 03:12:28,226 - bot.management.commands.run_bot - INFO - Router ulandi.
+2024-12-22 03:12:28,411 - root - INFO - Hamma foydalanuvchilarga bot ishga tushgani haqida xabar yuborildi.
+2024-12-22 03:12:28,411 - aiogram.dispatcher - INFO - Start polling
+2024-12-22 03:12:28,513 - aiogram.dispatcher - INFO - Run polling for bot @CryptoCunsershipBot id=7495355868 - 'crypto-cunsership'
+2024-12-22 03:12:33,428 - aiogram.event - INFO - Update id=970455640 is handled. Duration 375 ms by bot id=7495355868
+2024-12-22 03:12:35,471 - aiogram.event - INFO - Update id=970455641 is handled. Duration 125 ms by bot id=7495355868
+2024-12-22 03:12:37,264 - aiogram.event - INFO - Update id=970455642 is handled. Duration 187 ms by bot id=7495355868
+2024-12-22 03:12:40,355 - aiogram.event - INFO - Update id=970455643 is handled. Duration 125 ms by bot id=7495355868
+2024-12-22 03:12:42,700 - aiogram.event - INFO - Update id=970455644 is handled. Duration 125 ms by bot id=7495355868
+2024-12-22 03:12:55,957 - aiogram.event - INFO - Update id=970455645 is handled. Duration 125 ms by bot id=7495355868
+2024-12-22 03:12:57,274 - aiogram.event - INFO - Update id=970455646 is handled. Duration 140 ms by bot id=7495355868
+2024-12-22 03:15:00,133 - aiogram.dispatcher - INFO - Polling stopped
+2024-12-22 03:15:00,454 - root - INFO - Hamma foydalanuvchilarga bot ishdan to'xtagani haqida xabar yuborildi.
+2024-12-22 03:15:00,712 - aiogram.dispatcher - INFO - Polling stopped for bot @CryptoCunsershipBot id=7495355868 - 'crypto-cunsership'
