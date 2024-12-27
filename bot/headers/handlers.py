@@ -287,3 +287,8 @@ async def handle_receipt_photo(message: Message, state: FSMContext):
     )
 
     await state.clear()
+
+
+@router.message(F.text.in_(["issuing money", "выпуск денег"]))
+async def issuing_money(message: Message):
+    pass
