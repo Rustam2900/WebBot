@@ -1,8 +1,6 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
-from bot.validators import phone_number_validator
-
 
 class CustomUser(models.Model):
     full_name = models.CharField(_("Full Name"), max_length=255, blank=True)
@@ -18,6 +16,8 @@ class CustomUser(models.Model):
     referral_link = models.CharField(max_length=255, blank=True, null=True)
     team = models.ManyToManyField("self", blank=True, symmetrical=False)
     generate_id = models.CharField(max_length=10, unique=True, blank=True, null=True)
+    package = models.ForeignKey('account.VIPPackage', on_delete=models.CASCADE, related_name='users')
+    address_money = models.CharField(max_length=100, null=True, blank=True, unique=True)
 
     class Meta:
         verbose_name = _("User")
@@ -52,6 +52,7 @@ class VIPPackage(models.Model):
     duration = models.PositiveIntegerField(verbose_name="Davomiyligi (kun)")
     daily_income = models.DecimalField(max_digits=20, decimal_places=15, verbose_name="Kunlik Daromad")
     created_at = models.DateTimeField(auto_now_add=True)
+    customuser = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='vip_packages')
 
     def __str__(self):
         return self.name
@@ -75,3 +76,21 @@ class News(models.Model):
     class Meta:
         verbose_name = _("News")
         verbose_name_plural = _("News")
+
+
+class OrderMinSum(models.Model):
+    min_order_sum = models.CharField(_("order minimum sum"), max_length=255)
+
+    class Meta:
+        verbose_name = "Order minimum sum"
+        verbose_name_plural = "Order minimum sum"
+
+    def __str__(self):
+        return self.min_order_sum
+
+
+class AddressMoney(models.Model):
+    telegram_address_money = models.CharField(max_length=100, null=True, blank=True, unique=True)
+
+    def __str__(self):
+        return self.telegram_address_money

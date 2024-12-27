@@ -4,8 +4,9 @@ from aiogram.types import Message
 from django.utils import timezone
 
 from asgiref.sync import sync_to_async
+from django.db.models import Sum
 
-from account.models import CustomUser
+from account.models import CustomUser, VIPPackage
 
 
 @sync_to_async
@@ -22,6 +23,37 @@ def get_user_statistics():
         "total_users": total_users,
         "new_users_24h": new_users_24h,
         "new_users_1_month": new_users_1_month
+    }
+
+
+@sync_to_async
+def get_user_money_statistics(user_id):
+    time_24_hours_ago = timezone.now() - timedelta(days=1)
+
+    time_1_month_ago = timezone.now() - timedelta(days=30)
+
+    income_24h = \
+        CustomUser.objects.filter(telegram_id=user_id, created_at__gte=time_24_hours_ago).aggregate(
+            total_income=Sum('my_money'))[
+            'total_income'] or 0
+    income_1_month = \
+        CustomUser.objects.filter(telegram_id=user_id, created_at__gte=time_1_month_ago).aggregate(
+            total_income=Sum('my_money'))[
+            'total_income'] or 0
+
+    total_income = CustomUser.objects.filter(
+        telegram_id=user_id
+    ).aggregate(total_income=Sum('my_money'))['total_income'] or 0
+
+    total_vip_spent = VIPPackage.objects.filter(
+        customuser__telegram_id=user_id
+    ).aggregate(total_spent=Sum('price'))['total_spent'] or 0
+
+    return {
+        "income_24h": income_24h,
+        "income_1_month": income_1_month,
+        "total_income": total_income,
+        "total_vip_spent": total_vip_spent,
     }
 
 

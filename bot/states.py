@@ -7,3 +7,7 @@ class UserStates(StatesGroup):
 
 class SendMessage(StatesGroup):
     msg = State()
+
+
+class VIPPurchaseState(StatesGroup):
+    waiting_for_receipt = State()

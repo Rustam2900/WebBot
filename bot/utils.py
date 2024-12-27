@@ -11,12 +11,7 @@ default_languages = {
                        "Выберите один из языков ниже!",
 
     "en": {
-        "not": "❌ You cannot use the bot, you are blacklisted.\n"
-               "❗ To use the bot, contact the admin: @ruqiyasuv",
-        "connection": "Currently, we only provide services for Fergana:\n"
-                      "Looking for dealers in other regions:\n"
-                      "For offers:\n"
-                      "📞+998916694474 📩 @Ruqiyasuv",
+
         "name_update": "Update full name",
         "phone_update": "Update phone number",
         "lang_update": "Change language",
@@ -64,16 +59,25 @@ default_languages = {
         "deposit_money": "deposit money",
         "issuing_money": "issuing money",
         "statistics": "Statistics",
-        "already_linked": "You are trying to access someone else's account. Access denied."
+        "already_linked": "You are trying to access someone else's account. Access denied.",
+        "not": "not",
+        "vip_packege": "Please choose a VIP package:",
+        "user_check": "✅ Receipt received!"
+                      "📊 Verification will be completed within 24 hours."
+                      "🌐 You can track your status via the website.",
+        "user_check_error": "❌ An error occurred while sending the receipt. Please try again.",
+        "user_check_photo_error": "❌ Please send the receipt as an image.",
+        "wallet_address": "💼 Wallet address",
+        "receipt_request": "📸 Please send the payment receipt.",
+        "user_balance_statistics": "Users balance statistics",
+        "earnings_24h": "Earnings in 24 hours:",
+        "earnings_1_month": "Earnings in 1 month:",
+        "total_earnings": "Total earnings:",
+        "total_spent_on_vip": "Total spent on VIP packages:"
     },
 
     "ru": {
-        "not": "❌ Вы не можете использовать бот, вы в черном списке.\n"
-               "❗ Для использования бота свяжитесь с администратором: @ruqiyasuv",
-        "connection": "На данный момент у нас есть услуги только для Ферганы:\n"
-                      "Для других регионов ищем дилеров:\n"
-                      "Для предложений:\n"
-                      "📞+998916694474 📩 @Ruqiyasuv",
+
         "name_update": "Изменить полное имя",
         "phone_update": "Изменить номер телефона",
         "lang_update": "Изменить язык",
@@ -122,6 +126,20 @@ default_languages = {
         "issuing_money": "выпуск денег",
         "statistics": "Статистика",
         "already_linked": "Вы пытаетесь получить доступ к чужому аккаунту. Доступ запрещен.",
+        "not": "нет",
+        "vip_packege": "Пожалуйста, выберите VIP пакет:",
+        "user_check": "✅ Чек получен! \n"
+                      "📊 Проверка будет завершена в течение 24 часов. \n"
+                      "🌐 Вы можете отслеживать свой статус через сайт. \n",
+        "user_check_error": "❌ Произошла ошибка при отправке чека. Пожалуйста, попробуйте снова.",
+        "user_check_photo_error": "❌ Пожалуйста, отправьте чек в виде изображения.",
+        "wallet_address": "💼 Адрес кошелька",
+        "receipt_request": "📸 Пожалуйста, отправьте чек оплаты.",
+        "user_balance_statistics": "Статистика баланса пользователей",
+        "earnings_24h": "Заработано за 24 часа:",
+        "earnings_1_month": "Заработано за 1 месяц:",
+        "total_earnings": "Общий заработок:",
+        "total_spent_on_vip": "Общая сумма, потраченная на VIP пакеты:"
     }
 
 }
@@ -143,14 +161,3 @@ You can withdraw money from your account or buy a VIP package.
 <b>Зарабатывайте больше денег</b>
 """
 }
-
-order_text = {
-    "en": "Order number {} \n order status {}",
-    "ru": "Номер заказа {} \n Статус заказа {}"
-}
-
-
-def fix_phone(phone):
-    if "+" not in phone:
-        return f"+{phone}"
-    return phone

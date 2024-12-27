@@ -1,7 +1,7 @@
 from django.contrib import admin
 from modeltranslation.admin import TranslationAdmin
 
-from account.models import CustomUser, VIPPackage, News, UserPackage
+from account.models import CustomUser, VIPPackage, News, UserPackage, OrderMinSum, AddressMoney
 
 
 @admin.register(CustomUser)
@@ -29,4 +29,18 @@ class NewsAdmin(TranslationAdmin):
 class UserPackageAdmin(admin.ModelAdmin):
     list_display = ('id', 'active_until', 'daily_income', 'created_at')
     list_display_links = ('id', 'daily_income')
+    search_fields = ('id',)
+
+
+@admin.register(OrderMinSum)
+class OrderMinSumAdmin(admin.ModelAdmin):
+    list_display = ('id', 'min_order_sum')
+    list_display_links = ('id', 'min_order_sum')
+    search_fields = ('id',)
+
+
+@admin.register(AddressMoney)
+class AddressMoneyAdmin(admin.ModelAdmin):
+    list_display = ('id', 'telegram_address_money')
+    list_display_links = ('id', 'telegram_address_money')
     search_fields = ('id',)
