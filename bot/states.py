@@ -11,3 +11,8 @@ class SendMessage(StatesGroup):
 
 class VIPPurchaseState(StatesGroup):
     waiting_for_receipt = State()
+
+
+class MoneyWithdrawal(StatesGroup):
+    amount = State()
+    wallet = State()

@@ -8,10 +8,10 @@ from aiogram.fsm.context import FSMContext
 from aiogram.types import Message, CallbackQuery, InlineKeyboardMarkup, InlineKeyboardButton
 from asgiref.sync import sync_to_async
 
-from account.models import CustomUser, VIPPackage, AddressMoney
+from account.models import CustomUser, VIPPackage, AddressMoney, OrderMinSum
 from bot.db import save_user_telegram_info, get_user_language, get_user_money_statistics
 from bot.keyboards import get_languages, get_main_menu
-from bot.states import UserStates, VIPPurchaseState
+from bot.states import UserStates, VIPPurchaseState, MoneyWithdrawal
 
 from bot.utils import default_languages, introduction_template, user_languages
 from django.conf import settings
@@ -19,6 +19,7 @@ from aiogram.client.default import DefaultBotProperties
 
 router = Router()
 bot = Bot(token=settings.BOT_TOKEN, default=DefaultBotProperties(parse_mode=ParseMode.HTML))
+CHANNEL_ID = -1002304690046
 
 
 @router.message(CommandStart())
@@ -290,5 +291,86 @@ async def handle_receipt_photo(message: Message, state: FSMContext):
 
 
 @router.message(F.text.in_(["issuing money", "выпуск денег"]))
-async def issuing_money(message: Message):
-    pass
+async def issuing_money(message: Message, state: FSMContext):
+    telegram_id = message.from_user.id
+
+    user = await sync_to_async(CustomUser.objects.filter)(telegram_id=telegram_id)
+    user = await sync_to_async(user.first)()
+
+    if not user:
+        await message.answer("Siz ro'yxatdan o'tmagansiz!")
+        return
+
+    await state.set_state(MoneyWithdrawal.amount)
+    await message.answer("Pul chiqarish uchun miqdorni kiriting. Minimal summa: $10")
+
+
+async def send_to_channel(bot: Bot, user, amount):
+    message = (
+        f"💸 **Pul chiqarish so'rovi** 💸\n"
+        f"👤 Foydalanuvchi: {user.full_name} (@{user.tg_username})\n"
+        f"💵 Miqdor: ${amount}\n"
+        f"🏦 Hamyon manzili: `{user.address_money}`"
+    )
+
+    await bot.send_message(CHANNEL_ID, message, parse_mode="Markdown")
+
+
+@router.message(MoneyWithdrawal.amount)
+async def check_withdrawal_amount(message: Message, state: FSMContext):
+    telegram_id = str(message.from_user.id)
+    amount_text = message.text.strip()
+
+    try:
+        amount = float(amount_text)
+    except ValueError:
+        await message.answer("Iltimos, miqdorni to'g'ri formatda kiriting (masalan: 20)")
+        return
+
+    min_order_sum = await sync_to_async(OrderMinSum.objects.first)()
+    user = await sync_to_async(CustomUser.objects.filter)(telegram_id=telegram_id)
+    user = await sync_to_async(user.first)()
+
+    if not min_order_sum or amount < float(min_order_sum.min_order_sum):
+        await message.answer(f"Minimal pul chiqarish summasi: ${min_order_sum.min_order_sum}")
+        return
+
+    if amount > float(user.my_money):
+        await message.answer("Hisobingizda yetarli mablag‘ mavjud emas!")
+        return
+
+    await state.update_data(amount=amount)
+
+    if user.address_money:
+        await message.answer(
+            f"Mablag‘ 24 soat ichida quyidagi manzilga o‘tkaziladi: `{user.address_money}`",
+            parse_mode="Markdown"
+        )
+        await send_to_channel(message.bot, user, amount)  # Bot obyektini uzatyapmiz
+        await state.clear()
+    else:
+        await state.set_state(MoneyWithdrawal.wallet)
+        await message.answer("Iltimos, hamyon manzilingizni yuboring.")
+
+
+@router.message(MoneyWithdrawal.wallet)
+async def save_wallet_address(message: Message, state: FSMContext):
+    telegram_id = str(message.from_user.id)
+    wallet = message.text.strip()
+
+    data = await state.get_data()
+    amount = data.get("amount")
+
+    user = await sync_to_async(CustomUser.objects.filter)(telegram_id=telegram_id)
+    user = await sync_to_async(user.first)()
+
+    user.address_money = wallet
+    await sync_to_async(user.save)()
+
+    await message.answer(
+        f"Mablag‘ 24 soat ichida quyidagi manzilga o‘tkaziladi: `{wallet}`",
+        parse_mode="Markdown"
+    )
+
+    await send_to_channel(message.bot, user, amount)  # Bot obyektini uzatyapmiz
+    await state.clear()
