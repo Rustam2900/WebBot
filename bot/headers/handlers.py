@@ -346,7 +346,7 @@ async def check_withdrawal_amount(message: Message, state: FSMContext):
             f"Mablag‘ 24 soat ichida quyidagi manzilga o‘tkaziladi: `{user.address_money}`",
             parse_mode="Markdown"
         )
-        await send_to_channel(message.bot, user, amount)  # Bot obyektini uzatyapmiz
+        await send_to_channel(message.bot, user, amount)
         await state.clear()
     else:
         await state.set_state(MoneyWithdrawal.wallet)
@@ -372,5 +372,5 @@ async def save_wallet_address(message: Message, state: FSMContext):
         parse_mode="Markdown"
     )
 
-    await send_to_channel(message.bot, user, amount)  # Bot obyektini uzatyapmiz
+    await send_to_channel(message.bot, user, amount)
     await state.clear()
