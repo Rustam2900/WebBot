@@ -79,7 +79,7 @@ class News(models.Model):
 
 
 class OrderMinSum(models.Model):
-    min_order_sum = models.CharField(_("order minimum sum"), max_length=255)
+    min_order_sum = models.DecimalField(max_digits=20, decimal_places=7, default=0.0)
 
     class Meta:
         verbose_name = "Order minimum sum"
