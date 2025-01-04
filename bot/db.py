@@ -14,10 +14,10 @@ def get_user_statistics():
     total_users = CustomUser.objects.count()
 
     time_24_hours_ago = timezone.now() - timedelta(days=1)
-    new_users_24h = CustomUser.objects.filter(create_at__gte=time_24_hours_ago).count()
+    new_users_24h = CustomUser.objects.filter(created_at__gte=time_24_hours_ago).count()
 
     time_1_month_ago = timezone.now() - timedelta(days=30)
-    new_users_1_month = CustomUser.objects.filter(create_at__gte=time_1_month_ago).count()
+    new_users_1_month = CustomUser.objects.filter(created_at__gte=time_1_month_ago).count()
 
     return {
         "total_users": total_users,
@@ -59,7 +59,12 @@ def get_user_money_statistics(user_id):
 
 @sync_to_async
 def get_all_users():
-    return list(CustomUser.objects.all())
+    return list(
+        CustomUser.objects.filter(
+            telegram_id__isnull=False,
+        ).exclude(telegram_id='').exclude(telegram_id='0')
+    )
+
 
 
 @sync_to_async

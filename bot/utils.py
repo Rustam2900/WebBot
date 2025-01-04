@@ -73,7 +73,12 @@ default_languages = {
         "earnings_24h": "Earnings in 24 hours:",
         "earnings_1_month": "Earnings in 1 month:",
         "total_earnings": "Total earnings:",
-        "total_spent_on_vip": "Total spent on VIP packages:"
+        "total_spent_on_vip": "Total spent on VIP packages:",
+        "min_sum": "Enter the amount for withdrawal. Minimum amount: $20",
+        "min_sum_from": "Please enter the amount in the correct format (e.g., 20)",
+        "Insufficient_sum": "Insufficient funds in your account!",
+        "Withdrawal_request": "Withdrawal request was not completed. Please try again.",
+        "please_address": "Please send your wallet address.",
     },
 
     "ru": {
@@ -139,7 +144,12 @@ default_languages = {
         "earnings_24h": "Заработано за 24 часа:",
         "earnings_1_month": "Заработано за 1 месяц:",
         "total_earnings": "Общий заработок:",
-        "total_spent_on_vip": "Общая сумма, потраченная на VIP пакеты:"
+        "total_spent_on_vip": "Общая сумма, потраченная на VIP пакеты:",
+        "min_sum": "Введите сумму для вывода. Минимальная сумма: 20$",
+        "min_sum_from": "Пожалуйста, введите сумму в правильном формате (например: 20)",
+        "Insufficient_sum": "На вашем счету недостаточно средств!",
+        "Withdrawal_request": "Запрос на вывод средств не выполнен. Пожалуйста, попробуйте снова.",
+        "please_address": "Пожалуйста, отправьте адрес вашего кошелька.",
     }
 
 }

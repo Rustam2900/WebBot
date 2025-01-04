@@ -14,7 +14,7 @@ from bot.db import save_user_telegram_info, get_user_language, get_user_money_st
 from bot.keyboards import get_languages, get_main_menu
 from bot.states import UserStates, VIPPurchaseState, MoneyWithdrawal
 
-from bot.utils import default_languages, introduction_template, user_languages
+from bot.utils import default_languages, introduction_template, user_languages, message_history
 from django.conf import settings
 from aiogram.client.default import DefaultBotProperties
 from decimal import Decimal
@@ -252,6 +252,7 @@ async def handle_receipt_photo(message: Message, state: FSMContext):
     data = await state.get_data()
     package_id = data.get('package_id')
     user = message.from_user
+    await state.update_data(message_history=user_id)
     package = await sync_to_async(VIPPackage.objects.get)(id=package_id)
     try:
         web_user = await sync_to_async(CustomUser.objects.get)(telegram_id=user.id)
@@ -265,8 +266,8 @@ async def handle_receipt_photo(message: Message, state: FSMContext):
     photo = message.photo[-1]
 
     inline_buttons = [
-        [InlineKeyboardButton(text="Tastiqlash", callback_data=f"confirm_{package.id}")],
-        [InlineKeyboardButton(text="Bekor qilish", callback_data=f"cancel_{package.id}")]
+        [InlineKeyboardButton(text="Tasdiqlash", callback_data=f"confirm_{package.id}_{user.id}")],
+        [InlineKeyboardButton(text="Bekor qilish", callback_data=f"cancel_{package.id}_{user.id}")]
     ]
 
     inline_kb = InlineKeyboardMarkup(inline_keyboard=inline_buttons)
@@ -308,8 +309,11 @@ async def confirm_purchase(callback_query: CallbackQuery):
         return
 
     data_parts = callback_query.data.split("_")
+    if len(data_parts) < 3:
+        await callback_query.answer("❌ Xatolik: Callback ma'lumotlari noto'g'ri!", show_alert=True)
+        return
     package_id = int(data_parts[1])
-    user_id = int(data_parts[2])  # Foydalanuvchi ID
+    user_id = int(data_parts[2])
 
     user_lang = await get_user_language(user_id)
 
@@ -326,6 +330,7 @@ async def confirm_purchase(callback_query: CallbackQuery):
     await callback_query.message.edit_reply_markup(reply_markup=None)
     await callback_query.message.answer(text=f"✅ {user.full_name or user.username} uchun {package.price}$ qo'shildi.")
     await callback_query.answer("✅ Muvaffaqiyatli tasdiqlandi!")
+    await callback_query.message.delete()
 
 
 @router.callback_query(F.data.startswith("cancel_"))
@@ -335,55 +340,84 @@ async def cancel_purchase(callback_query: CallbackQuery):
         return
 
     data_parts = callback_query.data.split("_")
-    package_id = int(data_parts[1])
-    user_id = int(data_parts[2])  # Foydalanuvchi ID
-
-    user_lang = await get_user_language(user_id)
+    if len(data_parts) < 3:
+        await callback_query.answer("❌ Xatolik: Callback ma'lumotlari noto'g'ri!", show_alert=True)
+        return
 
     await callback_query.message.edit_reply_markup(reply_markup=None)
     await callback_query.message.answer(text="❌ To'lov bekor qilindi.")
     await callback_query.answer("❌ Bekor qilindi.")
+    await callback_query.message.delete()
 
 
 @router.message(F.text.in_(["issuing money", "выпуск денег"]))
 async def issuing_money(message: Message, state: FSMContext):
     telegram_id = message.from_user.id
+    user_id = message.from_user.id
+    user_lang = await get_user_language(user_id)
 
     user = await sync_to_async(CustomUser.objects.filter)(telegram_id=telegram_id)
     user = await sync_to_async(user.first)()
 
     if not user:
-        await message.answer("Siz ro'yxatdan o'tmagansiz!")
+        await message.answer(default_languages[user_lang])
         return
 
     await state.set_state(MoneyWithdrawal.amount)
-    await message.answer("Pul chiqarish uchun miqdorni kiriting. Minimal summa: 20$")
+    await message.answer(default_languages[user_lang]['min_sum'])
 
 
 async def send_to_channel(bot: Bot, user, amount):
     user_name = user.full_name if user.full_name else "not"
     tg_username = user.tg_username if user.tg_username else "not"
     wallet_address = user.address_money if user.address_money else "not"
-
     message = (
         f"💸 **Pul chiqarish so'rovi** 💸\n"
         f"👤 Foydalanuvchi: {user_name} (@{tg_username})\n"
         f"💵 Miqdor: {amount}$\n"
         f"🏦 Hamyon manzili: `{wallet_address}`"
     )
+    # inline_buttons = [
+    #     [InlineKeyboardButton(text="Tasdiqlash", callback_data=f"confirm_conf_{user.telegram_id}")],
+    #     [InlineKeyboardButton(text="Bekor qilish", callback_data=f"cancel_can_{user.telegram_id}")]
+    # ]
+    # inline_kb = InlineKeyboardMarkup(inline_keyboard=inline_buttons)
+    await bot.send_message(CHANNEL_ID, message, parse_mode="HTML", reply_markup=None)
 
-    await bot.send_message(CHANNEL_ID, message, parse_mode="HTML")
+
+# @router.callback_query(F.data.startswith("confirm_conf_"))
+# async def confirm_withdrawal(callback_query: CallbackQuery, bot: Bot):
+#     user_id = int(callback_query.data.split("_")[1])
+#     print("UserIDDDDDDDDDDDDDD", user_id)
+#     if user_id != ADMIN_ID:
+#         await bot.send_message(user_id, "❌ Sizda bu amalni bajarish huquqi yo'q!")
+#         return
+#     await bot.send_message(user_id, "✅ Sizning pulingiz hamyoningizga muvaffaqiyatli yuborildi.")
+#     await callback_query.answer("✅ Pul chiqarish so'rovi tasdiqlandi.")
+#     await callback_query.message.delete()
+#
+#
+# @router.callback_query(F.data.startswith("cancel_can_"))
+# async def cancel_withdrawal(callback_query: CallbackQuery, bot: Bot):
+#     user_id = int(callback_query.data.split("_")[1])
+#     print("UserIDDDDDDDDDDDDDD", user_id, "Cancel")
+#
+#     await bot.send_message(user_id, "❌ Uzr, sizning pulingiz keyinroq tashlab beriladi.")
+#     await callback_query.answer("❌ Pul chiqarish so'rovi bekor qilindi.")
+#     await callback_query.message.delete()
 
 
 @router.message(MoneyWithdrawal.amount)
 async def check_withdrawal_amount(message: Message, state: FSMContext):
     telegram_id = str(message.from_user.id)
+    user_id = message.from_user.id
+    user_lang = await get_user_language(user_id)
     amount_text = message.text.strip()
 
     try:
         amount = Decimal(amount_text)
     except ValueError:
-        await message.answer("Iltimos, miqdorni to'g'ri formatda kiriting (masalan: 20)")
+        await message.answer(default_languages[user_lang]['min_sum_from'])
         return
 
     min_order_sum = await sync_to_async(OrderMinSum.objects.first)()
@@ -391,32 +425,32 @@ async def check_withdrawal_amount(message: Message, state: FSMContext):
     user = await sync_to_async(user.first)()
 
     if not min_order_sum or amount < min_order_sum.min_order_sum:
-        await message.answer(f"Minimal pul chiqarish summasi: {min_order_sum.min_order_sum}")
+        await message.answer(f"Minimum summ: {min_order_sum.min_order_sum}")
         return
 
     if amount > user.my_money:
-        await message.answer("Hisobingizda yetarli mablag‘ mavjud emas!")
+        await message.answer(default_languages[user_lang]['Insufficient_sum'])
         return
 
     try:
         await sync_to_async(handle_transaction)(telegram_id, amount)
     except Exception as e:
-        logger.error(f"Pul chiqarish tranzaksiyasi muvaffaqiyatsiz: {e}")
-        await message.answer("Pul chiqarish so‘rovi bajarilmadi. Iltimos, qaytadan urinib ko‘ring.")
+        logger.error(f"error: {e}")
+        await message.answer(default_languages[user_lang]['Withdrawal_request'])
         return
 
     await state.update_data(amount=amount)
 
     if user.address_money:
         await message.answer(
-            f"Mablag‘ 24 soat ichida quyidagi manzilga o‘tkaziladi: `{user.address_money}`",
+            f"{default_languages[user_lang]['earnings_24h']} `{user.address_money}`",
             parse_mode="Markdown"
         )
         await send_to_channel(message.bot, user, amount)
         await state.clear()
     else:
         await state.set_state(MoneyWithdrawal.wallet)
-        await message.answer("Iltimos, hamyon manzilingizni yuboring.")
+        await message.answer(default_languages[user_lang]['please_address'])
 
 
 def handle_transaction(telegram_id, amount):
@@ -424,7 +458,7 @@ def handle_transaction(telegram_id, amount):
         user = CustomUser.objects.select_for_update().get(telegram_id=telegram_id)
 
         if amount > user.my_money:
-            raise ValueError("Hisobdagi pul miqdori yetarli emas!")
+            raise ValueError(default_languages[user.user_lang]['Insufficient_sum'])
 
         user.my_money -= amount
         user.save()
@@ -434,6 +468,8 @@ def handle_transaction(telegram_id, amount):
 @router.message(MoneyWithdrawal.wallet)
 async def save_wallet_address(message: Message, state: FSMContext):
     telegram_id = str(message.from_user.id)
+    user_id = message.from_user.id
+    user_lang = await get_user_language(user_id)
     wallet = message.text.strip()
 
     data = await state.get_data()
@@ -446,7 +482,7 @@ async def save_wallet_address(message: Message, state: FSMContext):
     await sync_to_async(user.save)()
 
     await message.answer(
-        f"Mablag‘ 24 soat ichida quyidagi manzilga o‘tkaziladi: `{wallet}`",
+        f"{default_languages[user_lang]['earnings_24h']} `{wallet}`",
         parse_mode="Markdown"
     )
 

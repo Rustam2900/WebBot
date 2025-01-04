@@ -10,7 +10,7 @@ from aiogram.fsm.context import FSMContext
 from aiogram.types import Message, ReplyKeyboardRemove
 from django.conf import settings
 
-from bot.db import get_user_statistics, get_all_users
+from bot.db import get_user_statistics, get_all_users, get_user_language
 from bot.keyboards import get_main_menu, get_admin_menu
 from account.models import CustomUser
 from bot.states import SendMessage
@@ -24,20 +24,23 @@ bot = Bot(token=settings.BOT_TOKEN, default=DefaultBotProperties(parse_mode=Pars
 
 def get_admin_ids():
     admin_ids = os.getenv("ADMINS", "")
+    print("#######################", admin_ids)
     return [int(admin_id.strip()) for admin_id in admin_ids.split(",") if admin_id.strip().isdigit()]
 
 
 def is_admin(user_id):
     admin_ids = get_admin_ids()
+    print("#################aliadmin", admin_ids)
     return user_id in admin_ids
 
 
 @router.message(Command('admin'))
 async def admin(message: Message):
     user_id = message.from_user.id
-
+    print("################user_id", user_id)
+    user_lang = await get_user_language(user_id)
     user = await CustomUser.objects.filter(telegram_id=user_id).afirst()
-    main_menu_markup = get_main_menu()
+    main_menu_markup = get_main_menu(user_lang)
     admin_menu_markup = get_admin_menu()
     if is_admin(user_id):
         await message.answer(text="👮🏻‍♂️Admin Xushkelibsiz\n"
@@ -86,16 +89,18 @@ async def send_message(message: Message, state: FSMContext):
     users = await get_all_users()
     total_users = len(users)
     failed_count = 0
+    failed_users = []
 
     for user in users:
         try:
-            await bot.forward_message(
+            await bot.send_message(
                 chat_id=user.telegram_id,
-                from_chat_id=message.from_user.id,
-                message_id=message.message_id,
+                text=message.text if message.text else "Xabar yuborildi."
             )
-        except Exception:
+        except Exception as e:
             failed_count += 1
+            failed_users.append(user.telegram_id)
+            print(f"Failed to send message to {user.telegram_id}: {e}")
 
     sent_count = total_users - failed_count
     await bot.send_message(
@@ -107,3 +112,11 @@ async def send_message(message: Message, state: FSMContext):
         ),
         parse_mode=ParseMode.HTML,
     )
+
+    if failed_users:
+        failed_list = "\n".join(str(u) for u in failed_users)
+        await bot.send_message(
+            chat_id=is_admin(user_id),
+            text=f"<b>Ushbu foydalanuvchilarga xabar yuborilmadi:</b>\n{failed_list}",
+            parse_mode=ParseMode.HTML,
+        )
