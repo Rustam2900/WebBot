@@ -12,7 +12,7 @@ def register(request):
             user = form.save()
             login(request, user)
             messages.success(request, "Registration successful!")
-            return redirect('home')
+            return redirect('home')  # URL name bilan ishlatilgan
         else:
             messages.error(request, "Please correct the errors below.")
     else:
@@ -31,7 +31,7 @@ def user_login(request):
             if user is not None:
                 login(request, user)
                 messages.success(request, "You are now logged in!")
-                return redirect('home')
+                return redirect('home')  # URL name bilan ishlatilgan
             else:
                 messages.error(request, "Invalid username or password.")
         else:
@@ -42,7 +42,6 @@ def user_login(request):
 
 
 # Logout View
-def user_logout(request):
-    logout(request)
-    messages.success(request, "You have been logged out.")
-    return redirect('login')
+def home(request):
+    return render(request, 'account/home.html')
+

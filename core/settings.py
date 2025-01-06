@@ -100,19 +100,26 @@ USE_I18N = True
 
 USE_TZ = True
 
-STATIC_ROOT = BASE_DIR / 'staticfiles'
-STATIC_URL = '/staticfiles/'
+# Statik fayllar uchun URL
+STATIC_URL = '/static/'
 
+# Statik fayllar yig'iladigan joy (faqat production uchun ishlatiladi)
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+# Ishlab chiqish (development) muhiti uchun qo'shimcha statik fayllar joyi
 STATICFILES_DIRS = [
-    BASE_DIR / 'staticfiles',
+    BASE_DIR / 'static',  # Alohida 'static' papkasidan foydalaning
 ]
 
+# Media fayllar uchun URL va yo'l
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
+# Tarjima fayllari uchun yo'l
 LOCALE_PATHS = [
     BASE_DIR / 'locale/',
 ]
+
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
