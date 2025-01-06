@@ -26,6 +26,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'bot',
     'account',
+    'widget_tweaks',
 
 ]
 
@@ -40,11 +41,12 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'core.urls'
+AUTH_USER_MODEL = 'account.CustomUser'
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'Template'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -98,8 +100,8 @@ USE_I18N = True
 
 USE_TZ = True
 
-STATIC_ROOT = BASE_DIR / 'static'
-STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATIC_URL = '/staticfiles/'
 
 STATICFILES_DIRS = [
     BASE_DIR / 'staticfiles',

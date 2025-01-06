@@ -5,10 +5,22 @@ from account.models import CustomUser, VIPPackage, News, UserPackage, OrderMinSu
 
 
 @admin.register(CustomUser)
-class CustomUserAdmin(TranslationAdmin):
-    list_display = ('id', 'username', 'my_money', 'user_lang', 'generate_id')
-    list_display_links = ('id', 'username', 'generate_id')
-    search_fields = ('id', 'username', 'email', 'generate_id')
+class CustomUserAdmin(admin.ModelAdmin):
+    list_display = ('email', 'full_name', 'is_active', 'is_staff')
+    list_filter = ('is_active', 'is_staff')
+    search_fields = ('email', 'full_name')
+    ordering = ('email',)
+    filter_horizontal = ()
+    fieldsets = (
+        (None, {'fields': ('email', 'password')}),
+        ('Personal info', {'fields': (
+            'full_name', 'username', 'user_lang', 'telegram_id', 'tg_username', 'image', 'bio', 'referral_link',
+            'team', 'generate_id', 'package', 'address_money', 'created_at')}),
+        ('Permissions', {'fields': ('is_active', 'is_staff', 'is_superuser')}),
+        ('Important dates', {'fields': ('last_login',)}),
+    )
+
+    readonly_fields = ('last_login', 'created_at')
 
 
 @admin.register(VIPPackage)

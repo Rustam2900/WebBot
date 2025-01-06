@@ -1,8 +1,26 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 
 
-class CustomUser(models.Model):
+class CustomUserManager(BaseUserManager):
+    def create_user(self, email, password=None, **extra_fields):
+        if not email:
+            raise ValueError(_('The Email field must be set'))
+        email = self.normalize_email(email)
+        user = self.model(email=email, **extra_fields)
+        user.set_password(password)
+        user.save(using=self._db)
+        return user
+
+    def create_superuser(self, email, password=None, **extra_fields):
+        extra_fields.setdefault('is_staff', True)
+        extra_fields.setdefault('is_superuser', True)
+
+        return self.create_user(email, password, **extra_fields)
+
+
+class CustomUser(AbstractBaseUser, PermissionsMixin):
     full_name = models.CharField(_("Full Name"), max_length=255, blank=True)
     username = models.CharField(_("Username"), max_length=255, blank=True, null=True)
     user_lang = models.CharField(max_length=10, blank=True, null=True)
@@ -10,21 +28,29 @@ class CustomUser(models.Model):
     tg_username = models.CharField(_("Telegram Username"), max_length=255, blank=True, null=True, unique=True)
     created_at = models.DateTimeField(auto_now_add=True)
     my_money = models.DecimalField(max_digits=20, decimal_places=7, default=0.0)
-    image = models.ImageField(upload_to='static/account/images', null=True, blank=True)
+    image = models.ImageField(upload_to='staticfiles/account/images', null=True, blank=True)
     bio = models.TextField(max_length=300, null=True, blank=True)
-    email = models.EmailField(max_length=255, blank=True, null=True)
+    email = models.EmailField(_("Email Address"), unique=True)
     referral_link = models.CharField(max_length=255, blank=True, null=True)
     team = models.ManyToManyField("self", blank=True, symmetrical=False)
     generate_id = models.CharField(max_length=10, unique=True, blank=True, null=True)
-    package = models.ForeignKey('account.VIPPackage', on_delete=models.CASCADE, related_name='users')
+    package = models.ForeignKey('account.VIPPackage', on_delete=models.CASCADE, related_name='users', null=True, blank=True)
     address_money = models.CharField(max_length=100, null=True, blank=True, unique=True)
+
+    is_active = models.BooleanField(default=True)
+    is_staff = models.BooleanField(default=False)
+
+    objects = CustomUserManager()
+
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = ['full_name']
 
     class Meta:
         verbose_name = _("User")
         verbose_name_plural = _("Users")
 
     def __str__(self):
-        return self.full_name
+        return self.email
 
 
 class UserPackage(models.Model):
@@ -44,7 +70,7 @@ class UserPackage(models.Model):
 
 
 class VIPPackage(models.Model):
-    image = models.ImageField(upload_to='static/vippacet/images', verbose_name="Paket Rasm")
+    image = models.ImageField(upload_to='staticfiles/vippacet/images', verbose_name="Paket Rasm")
     name = models.CharField(_("name"), max_length=100)
     title = models.CharField(_("title"), max_length=100)
     description = models.TextField(_("description"))
@@ -63,7 +89,7 @@ class VIPPackage(models.Model):
 
 
 class News(models.Model):
-    image = models.ImageField(upload_to='static/news/images')
+    image = models.ImageField(upload_to='staticfiles/news/images')
     title = models.CharField(_("title"), max_length=200)
     description = models.TextField(_("description"))
     created_at = models.DateTimeField(auto_now_add=True)

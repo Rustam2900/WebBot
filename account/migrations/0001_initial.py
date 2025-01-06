@@ -31,7 +31,7 @@ class Migration(migrations.Migration):
                 ('tg_username', models.CharField(blank=True, max_length=255, null=True, unique=True, verbose_name='Telegram Username')),
                 ('created_at', models.DateTimeField(auto_now_add=True)),
                 ('my_money', models.DecimalField(decimal_places=2, default=0.0, max_digits=20)),
-                ('image', models.ImageField(blank=True, null=True, upload_to='static/account/images')),
+                ('image', models.ImageField(blank=True, null=True, upload_to='staticfiles/account/images')),
                 ('bio', models.TextField(blank=True, max_length=300, null=True)),
                 ('bio_uz', models.TextField(blank=True, max_length=300, null=True)),
                 ('bio_en', models.TextField(blank=True, max_length=300, null=True)),
@@ -49,7 +49,7 @@ class Migration(migrations.Migration):
             name='VIPPackage',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('image', models.ImageField(upload_to='static/vippacet/images', verbose_name='Paket Rasm')),
+                ('image', models.ImageField(upload_to='staticfiles/vippacet/images', verbose_name='Paket Rasm')),
                 ('name', models.CharField(max_length=100, verbose_name='Paket Nomi')),
                 ('name_uz', models.CharField(max_length=100, null=True, verbose_name='Paket Nomi')),
                 ('name_en', models.CharField(max_length=100, null=True, verbose_name='Paket Nomi')),
@@ -91,7 +91,7 @@ class Migration(migrations.Migration):
             name='News',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('image', models.ImageField(upload_to='static/news/images')),
+                ('image', models.ImageField(upload_to='staticfiles/news/images')),
                 ('title', models.CharField(max_length=200)),
                 ('description', models.TextField()),
                 ('created_at', models.DateTimeField(auto_now_add=True)),
