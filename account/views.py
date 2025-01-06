@@ -1,10 +1,10 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import login, authenticate, logout
+from django.contrib.auth import login, authenticate
 from django.contrib import messages
 from .forms import CustomUserRegistrationForm, CustomUserLoginForm
+from .models import VIPPackage
 
 
-# Registration View
 def register(request):
     if request.method == 'POST':
         form = CustomUserRegistrationForm(request.POST)
@@ -12,7 +12,7 @@ def register(request):
             user = form.save()
             login(request, user)
             messages.success(request, "Registration successful!")
-            return redirect('home')  # URL name bilan ishlatilgan
+            return redirect('home')
         else:
             messages.error(request, "Please correct the errors below.")
     else:
@@ -20,7 +20,6 @@ def register(request):
     return render(request, 'account/register.html', {'form': form})
 
 
-# Login View
 def user_login(request):
     if request.method == 'POST':
         form = CustomUserLoginForm(request, data=request.POST)
@@ -31,7 +30,7 @@ def user_login(request):
             if user is not None:
                 login(request, user)
                 messages.success(request, "You are now logged in!")
-                return redirect('home')  # URL name bilan ishlatilgan
+                return redirect('home')
             else:
                 messages.error(request, "Invalid username or password.")
         else:
@@ -41,7 +40,10 @@ def user_login(request):
     return render(request, 'account/login.html', {'form': form})
 
 
-# Logout View
 def home(request):
     return render(request, 'account/home.html')
 
+
+def vip_package(request):
+    packages = VIPPackage.objects.all()
+    return render(request, 'account/vip_package.html', {'packages': packages})

@@ -123,6 +123,8 @@
             color: #fff;
         }
 
+
+
     </style>
 </head>
 <body>
@@ -133,6 +135,10 @@
             <img src="{% static 'home/4.jpg' %}" alt="Crypto-Censorship Logo"
                  style="width: 80px; height: 70px; border-radius: 60%;">
         </a>
+        <div class="ml-auto">
+            <a href="{% url 'login' %}" class="btn btn-outline-primary">Sign In</a>
+            <a href="{% url 'register' %}" class="btn btn-primary">Sign Up</a>
+        </div>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -140,13 +146,13 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
-                    <a class="nav-link active" href="#">Asosiy Pej</a>
+                    <a class="nav-link active" href="{% url 'home' %}">Asosiy Pej</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">My Account</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">VIP Vapetlar</a>
+                    <a class="nav-link" href="{% url 'vippackage' %}">VIP Vapetlar</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Task</a>
