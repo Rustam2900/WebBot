@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VIP Paketlar</title>
+    <title>My account</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"/>
     <style>
         body {
@@ -93,6 +93,9 @@
             }
         }
 
+
+
+
     </style>
 </head>
 <body>
@@ -133,22 +136,17 @@
 
 <!-- VIP Paketlar Section -->
 <section class="vip-container">
-    <h1>VIP Paketlar</h1>
+    <h1>My Account</h1>
     <div class="vip-packages">
-        {% for package in packages %}
+        {% for account in accounts %}
         <div class="vip-card">
-            <img src="{{ package.image.url }}" alt="{{ package.name }}">
-            <h3>{{ package.name }}</h3>
-            <h4>{{ package.title }}</h4>
-            <p>{{ package.description }}</p>
-            <p><strong>Narxi:</strong> ${{ package.price }}</p>
-            <p><strong>Davomiyligi:</strong> {{ package.duration }} kun</p>
-            <p><strong>Kunlik Daromad:</strong> ${{ package.daily_income }}</p>
-            <a href="https://t.me/CryptoCunsershipBot" class="buy-btn">Sotib olish</a>
+            <h3>{{ account.full_name }}</h3>
+
         </div>
         {% endfor %}
     </div>
 </section>
+
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 

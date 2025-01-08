@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate
 from django.contrib import messages
 from .forms import CustomUserRegistrationForm, CustomUserLoginForm
-from .models import VIPPackage
+from .models import VIPPackage, CustomUser
 
 
 def register(request):
@@ -47,3 +47,8 @@ def home(request):
 def vip_package(request):
     packages = VIPPackage.objects.all()
     return render(request, 'account/vip_package.html', {'packages': packages})
+
+
+def my_account(request):
+    accounts = CustomUser.objects.all()
+    return render(request, 'account/my_account.html', {'accounts': accounts})
