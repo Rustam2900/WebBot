@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate
 from django.contrib import messages
-from .forms import CustomUserRegistrationForm, CustomUserLoginForm
-from .models import VIPPackage, CustomUser
+from account.forms import CustomUserRegistrationForm, CustomUserLoginForm, UserUpdateForm, ProfileUpdateForm
+from account.models import VIPPackage
+from django.contrib.auth.decorators import login_required
 
 
 def register(request):
@@ -49,6 +50,23 @@ def vip_package(request):
     return render(request, 'account/vip_package.html', {'packages': packages})
 
 
+@login_required
 def my_account(request):
-    accounts = CustomUser.objects.all()
-    return render(request, 'account/my_account.html', {'accounts': accounts})
+    if request.method == 'POST':
+        user_form = UserUpdateForm(request.POST, instance=request.user)
+        profile_form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user)
+
+        if user_form.is_valid() and profile_form.is_valid():
+            user_form.save()
+            profile_form.save()
+            messages.success(request, 'Your account has been updated!')
+            return redirect('account/my_account')
+    else:
+        user_form = UserUpdateForm(instance=request.user)
+        profile_form = ProfileUpdateForm(instance=request.user)
+
+    context = {
+        'user_form': user_form,
+        'profile_form': profile_form,
+    }
+    return render(request, 'account/my_account.html', context)

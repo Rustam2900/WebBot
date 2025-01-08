@@ -14,3 +14,15 @@ class CustomUserRegistrationForm(UserCreationForm):
 class CustomUserLoginForm(AuthenticationForm):
     username = forms.CharField(max_length=255, label='Email')
     password = forms.CharField(widget=forms.PasswordInput, label='Password')
+
+
+class UserUpdateForm(forms.ModelForm):
+    class Meta:
+        model = CustomUser
+        fields = ['full_name', 'email', 'bio']
+
+
+class ProfileUpdateForm(forms.ModelForm):
+    class Meta:
+        model = CustomUser
+        fields = ['image']
