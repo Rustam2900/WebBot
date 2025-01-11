@@ -11,7 +11,10 @@ environ.Env.read_env(".env")
 
 SECRET_KEY = env("SECRET_KEY")
 DEBUG = env("DEBUG")
-ALLOWED_HOSTS = env.list("ALLOWED_HOSTS")
+ALLOWED_HOSTS = [
+    'crypto-cunsership.uz',
+    'www.crypto-cunsership.uz',  # Agar sizning domeningiz www bilan ishlasa
+]
 BOT_TOKEN = env.str('BOT_TOKEN')
 
 INSTALLED_APPS = [
@@ -110,6 +113,9 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_DIRS = [
     BASE_DIR / 'static',  # Alohida 'static' papkasidan foydalaning
 ]
+CSRF_TRUSTED_ORIGINS = [
+    'https://crypto-cunsership.uz',
+]
 
 # Media fayllar uchun URL va yo'l
 MEDIA_URL = '/media/'
@@ -119,7 +125,6 @@ MEDIA_ROOT = BASE_DIR / 'media'
 LOCALE_PATHS = [
     BASE_DIR / 'locale/',
 ]
-
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
