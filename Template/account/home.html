@@ -9,60 +9,80 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         body {
-            background-color: #400CAE;
+            background-image: url("{% static 'home/bnb1.jpg' %}");
+            background-size: cover;
+            background-position: center;
             font-family: Arial, sans-serif;
             color: #fff;
+            margin: 0;
+            padding: 0;
         }
+
         .top-bar {
-            background: #2F0A78;
+            background: rgba(47, 10, 120, 0.8);
             padding: 5px 0;
             text-align: center;
             font-size: 0.9em;
         }
+
         .navbar {
-            background-color: #2F0A78;
+            background-color: rgba(47, 10, 120, 0.8);
         }
+
         .navbar a {
             color: #fff !important;
         }
+
         .navbar a:hover {
             color: #FFD700 !important;
         }
+
         .hero {
             text-align: center;
             padding: 50px 20px;
             margin-top: 30px;
+            background-color: rgba(0, 0, 0, 0.5);
         }
-        .statistics {
-            text-align: center;
-            margin: 40px 0;
-        }
-        .statistics .stat {
-            display: inline-block;
-            margin: 20px;
-            font-size: 1.5em;
-        }
-        .services, .testimonials, .faq {
+
+        .statistics, .services, .vip-table, .testimonials, .faq, .contact {
             padding: 50px 20px;
             text-align: center;
         }
-        .service-item {
+
+        .vip-table table {
+            width: 100%;
+            color: #000;
             margin: 20px 0;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            overflow: hidden;
         }
+
+        .vip-table th, .vip-table td {
+            padding: 10px;
+            text-align: center;
+        }
+
+        .vip-table th {
+            background-color: #2F0A78;
+            color: #fff;
+        }
+
         .faq .accordion-item {
             margin: 10px 0;
         }
+
         .contact {
             background-color: #1A0432;
             color: #fff;
-            padding: 50px 20px;
-            text-align: center;
         }
+
         .social-icons a {
             margin: 0 10px;
             color: #FFD700;
             font-size: 1.8em;
         }
+
         .footer {
             text-align: center;
             margin-top: 50px;
@@ -70,69 +90,17 @@
             background-color: #2F0A78;
             color: #fff;
         }
-       /* Statistika bo'limi */
-        .statistics {
-            text-align: center;
-            margin: 50px 0;
-        }
-
-        .statistics h2 {
-            margin-bottom: 20px;
-            font-size: 2em;
-        }
-
-        .stat {
-            font-size: 1.2em;
-            margin: 10px 0;
-        }
-
-        /* Statistika rasmlari bo'limi */
-        .stat-images {
-            text-align: center;
-            margin: 40px 0;
-        }
-
-        .stat-images h3 {
-            margin-bottom: 20px;
-            font-size: 1.5em;
-        }
-
-        .image-container {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            flex-wrap: wrap;
-        }
-
-        .image-item {
-            width: 150px;
-            height: 150px;
-            overflow: hidden;
-            border-radius: 50%;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            transition: transform 0.3s ease;
-        }
-
-        .image-item img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .image-item:hover {
-            transform: scale(1.1);
-        }
 
     </style>
 </head>
 <body>
 
-
 <!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-dark">
     <div class="container">
         <a class="navbar-brand" href="#">
-            <img src="{% static 'home/4.jpg' %}" alt="Crypto-Censorship Logo" style="width: 80px; height: 70px; border-radius: 60%;">
+            <img src="{% static 'home/4.jpg' %}" alt="Crypto-Censorship Logo"
+                 style="width: 80px; height: 70px; border-radius: 60%;">
         </a>
         <div class="ml-auto">
             <a href="{% url 'login' %}" class="btn btn-outline-primary">Sign In</a>
@@ -146,54 +114,125 @@
                 <li class="nav-item"><a class="nav-link active" href="{% url 'home' %}">Asosiy Pej</a></li>
                 <li class="nav-item"><a class="nav-link" href="{% url 'my_account' %}">My Account</a></li>
                 <li class="nav-item"><a class="nav-link" href="{% url 'vippackage' %}">VIP Vapetlar</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">Task</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'news' %}">Task</a></li>
             </ul>
         </div>
     </div>
 </nav>
 
-<!-- Hero Section -->
-<section class="hero">
-    <h1>Biz Haqimizda</h1>
-    <p>Ishonchli xizmat ko'rsatamiz va ko'proq pul ishlang!</p>
-</section>
-
 <!-- Statistics -->
 <section class="statistics">
     <h2>Bizning Yutuqlarimiz</h2>
-    <div class="stat">🌟 10,000+ Foydalanuvchi</div>
-    <div class="stat">💼 500+ Hamkor</div>
-    <div class="stat">🚀 99.9% Mamnun mijozlar</div>
-</section>
-
-<section class="stat-images">
-    <h3>Bizning Faoliyatimizdan Lavhalar</h3>
-    <div class="image-container">
-        <div class="image-item">
-            <img src="{% static 'home/1.jpg' %}" alt="Statistika Rasm 1">
-        </div>
-        <div class="image-item">
-            <img src="{% static 'home/2.jpg' %}" alt="Statistika Rasm 2">
-        </div>
-        <div class="image-item">
-            <img src="{% static 'home/3.jpg' %}" alt="Statistika Rasm 3">
-        </div>
-        <div class="image-item">
-            <img src="{% static 'home/4.jpg' %}" alt="Statistika Rasm 3">
-        </div>
-    </div>
+    <div>🌟 10,000+ Foydalanuvchi</div>
+    <div>💼 500+ Hamkor</div>
+    <div>🚀 99.9% Mamnun mijozlar</div>
 </section>
 
 <!-- Services -->
-<section class="statistics">
+<section class="services">
     <h2>Xizmatlarimiz</h2>
-    <div class="stat">💻 Kripto konsultatsiya</div>
-    <div class="stat">📈 Investitsiya rejalari</div>
-    <div class="stat">🔒 Xavfsiz tranzaktsiyalar</div>
+    <div>💻 Kripto konsultatsiya</div>
+    <div>📈 Investitsiya rejalari</div>
+    <div>🔒 Xavfsiz tranzaktsiyalar</div>
 </section>
 
+<!-- VIP Table -->
+<section class="vip-table">
+    <h2>VIP Daromad Jadvali</h2>
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>VIP</th>
+            <th>Kunlik Daromad</th>
+            <th>90 Kunlik Natija</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>0.0360</td>
+            <td>0.0014</td>
+            <td>0.1300</td>
+        </tr>
+        <tr>
+            <td>0.0720</td>
+            <td>0.0029</td>
+            <td>0.2600</td>
+        </tr>
+        <tr>
+            <td>0.1400</td>
+            <td>0.0058</td>
+            <td>0.5200</td>
+        </tr>
+        <tr>
+            <td>0.2900</td>
+            <td>0.0120</td>
+            <td>0.7800</td>
+        </tr>
+        <tr>
+            <td>0.4300</td>
+            <td>0.0170</td>
+            <td>1.5600</td>
+        </tr>
+        <tr>
+            <td>0.7200</td>
+            <td>0.0230</td>
+            <td>2.6000</td>
+        </tr>
+        <tr>
+            <td>1.0100</td>
+            <td>0.0400</td>
+            <td>3.6400</td>
+        </tr>
+        <tr>
+            <td>1.4400</td>
+            <td>0.0580</td>
+            <td>5.2000</td>
+        </tr>
+        <tr>
+            <td>1.7300</td>
+            <td>0.0690</td>
+            <td>6.2400</td>
+        </tr>
+        <tr>
+            <td>2.7000</td>
+            <td>0.0980</td>
+            <td>8.8400</td>
+        </tr>
+        <tr>
+            <td>2.8900</td>
+            <td>0.1200</td>
+            <td>10.4000</td>
+        </tr>
+        <tr>
+            <td>3.6100</td>
+            <td>0.1400</td>
+            <td>13.0000</td>
+        </tr>
+        <tr>
+            <td>4.3300</td>
+            <td>0.1700</td>
+            <td>15.6000</td>
+        </tr>
+        <tr>
+            <td>5.7800</td>
+            <td>0.2300</td>
+            <td>20.8100</td>
+        </tr>
+        <tr>
+            <td>7.2200</td>
+            <td>0.2900</td>
+            <td>26.0400</td>
+        </tr>
+        <tr>
+            <td>14.4500</td>
+            <td>0.5800</td>
+            <td>52.0200</td>
+        </tr>
+        </tbody>
+    </table>
+</section>
 
-
+<!-- FAQ -->
 <section class="faq">
     <h2>Ko'p Beriladigan Savollar</h2>
     <div class="accordion" id="faqAccordion">
@@ -210,7 +249,6 @@
                 </div>
             </div>
         </div>
-
         <!-- Savol 2 -->
         <div class="accordion-item">
             <h2 class="accordion-header">
@@ -220,11 +258,11 @@
             </h2>
             <div id="faq2" class="accordion-collapse collapse">
                 <div class="accordion-body">
-                    Ushbu sayt foydalanuvchilarga moliyaviy mustaqillikka erishish va daromadlarini oshirish uchun imkoniyat yaratadi.
+                    Ushbu sayt foydalanuvchilarga moliyaviy mustaqillikka erishish va daromadlarini oshirish uchun
+                    imkoniyat yaratadi.
                 </div>
             </div>
         </div>
-
         <!-- Savol 3 -->
         <div class="accordion-item">
             <h2 class="accordion-header">
@@ -238,7 +276,6 @@
                 </div>
             </div>
         </div>
-
         <!-- Savol 4 -->
         <div class="accordion-item">
             <h2 class="accordion-header">
@@ -252,7 +289,6 @@
                 </div>
             </div>
         </div>
-
         <!-- Savol 5 -->
         <div class="accordion-item">
             <h2 class="accordion-header">
@@ -262,34 +298,24 @@
             </h2>
             <div id="faq5" class="accordion-collapse collapse">
                 <div class="accordion-body">
-                    Ha, biz foydalanuvchilarning ma'lumotlarini xavfsiz saqlash va maxfiylikni ta'minlash uchun ilg'or texnologiyalardan foydalanamiz.
+                    Ha, biz foydalanuvchilarning ma'lumotlarini xavfsiz saqlash va maxfiylikni ta'minlash uchun ilg'or
+                    texnologiyalardan foydalanamiz.
                 </div>
             </div>
         </div>
     </div>
 </section>
-<!-- Testimonials -->
-<section class="testimonials">
-    <h2>Mijozlar Fikrlari</h2>
-    <p>"Ajoyib xizmat! Pul ishlash juda oson." — Ali</p>
-    <p>"Ishonchli va tezkor xizmat." — Oygul</p>
+<!-- Social Icons -->
+<section class="social-icons">
+    <a href="https://t.me/+htAQD6kjZ2czMjIy" class="fab fa-facebook"></a>
+    <a href="https://t.me/+htAQD6kjZ2czMjIy" class="fab fa-twitter"></a>
+    <a href="https://t.me/+htAQD6kjZ2czMjIy" class="fab fa-instagram"></a>
+    <a href="https://t.me/+htAQD6kjZ2czMjIy" class="fab fa-youtube"></a>
 </section>
-
-<!-- Aloqa -->
-<section class="contact">
-    <h3>Aloqa</h3>
-    <p>📞 Telefon: +998 90 123 45 67</p>
-    <p>📧 Email: info@yourcompany.com</p>
-    <div class="social-icons">
-        <a href="#"><i class="fab fa-telegram"></i></a>
-        <a href="#"><i class="fab fa-instagram"></i></a>
-    </div>
-</section>
-
 <!-- Footer -->
-<footer class="footer">
-    <p>&copy; 2024 Your Company. All Rights Reserved.</p>
-</footer>
+<div class="footer">
+    <p>&copy; 2025 Crypto Censorship. Barcha huquqlar himoyalangan.</p>
+</div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>

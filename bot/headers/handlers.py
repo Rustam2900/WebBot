@@ -324,13 +324,29 @@ async def confirm_purchase(callback_query: CallbackQuery):
         await callback_query.answer(text=default_languages[user_lang]['not'])
         return
 
+    # VIP paket narxini foydalanuvchi hisobiga qo'shish
     user.my_money += package.price
     await sync_to_async(user.save)()
 
+    # Referalni olish va 10% qo'shish
+    referrer = await sync_to_async(user.team.first)()  # Refererni topish
+    if referrer:
+        referrer_bonus = package.price * 0.10  # 10% bonus
+        referrer.my_money += referrer_bonus
+        await sync_to_async(referrer.save)()  # Referer hisobi saqlanadi
+
+    # Xabarlarni yangilash va tasdiqlash
     await callback_query.message.edit_reply_markup(reply_markup=None)
-    await callback_query.message.answer(text=f"✅ {user.full_name or user.username} uchun {package.price}$ qo'shildi.")
+    await callback_query.message.answer(
+        text=f"✅ {user.full_name or user.username} uchun {package.price}$ qo'shildi."
+    )
+    if referrer:
+        await callback_query.message.answer(
+            text=f"✅ Referal uchun {referrer_bonus}$ qo'shildi (taklif qilgan shaxs: {referrer.full_name or referrer.username})."
+        )
     await callback_query.answer("✅ Muvaffaqiyatli tasdiqlandi!")
     await callback_query.message.delete()
+
 
 
 @router.callback_query(F.data.startswith("cancel_"))

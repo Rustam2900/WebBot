@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>News</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"/>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #141e30, #243b55);
+            color: #fff;
+        }
+
+        .vip-container {
+            text-align: center;
+            padding: 50px 20px;
+        }
+
+        .vip-container h1 {
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+        }
+
+        .vip-packages {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .vip-card {
+            background: #1e293b;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            text-align: center;
+            width: 300px;
+            transition: transform 0.3s ease;
+        }
+
+        .vip-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .vip-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .vip-card h4 {
+            font-size: 1.5rem;
+            margin: 10px 0;
+        }
+
+        .vip-card p {
+            font-size: 0.9rem;
+            margin: 5px 0;
+        }
+
+        .like-btn {
+            display: inline-block;
+            margin: 15px 0;
+            padding: 10px 20px;
+            background: #4caf50;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background 0.3s ease;
+            border: none;
+        }
+
+        .like-btn:hover {
+            background: #388e3c;
+        }
+
+        .like-heart {
+            font-size: 1.5rem;
+            margin-right: 8px;
+            transition: color 0.3s ease;
+        }
+
+        .liked {
+            color: #e74c3c; /* Liked - Qizil rang */
+        }
+
+        .unliked {
+            color: #ccc; /* Unlike - Kul rang */
+        }
+
+        /* Mobil Moslashuv */
+        @media (max-width: 768px) {
+            .vip-packages {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .vip-card {
+                width: 90%; /* Karta kengligini kichikroq qilish */
+            }
+
+            .vip-container h1 {
+                font-size: 2rem;
+            }
+
+            .like-btn {
+                padding: 8px 16px;
+                font-size: 0.9rem;
+            }
+
+            .vip-card p {
+                font-size: 0.85rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container">
+        <a class="navbar-brand" href="#">
+            <img src="{% static 'home/4.jpg' %}" alt="Crypto-Censorship Logo"
+                 style="width: 80px; height: 70px; border-radius: 60%;">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link active" href="{% url 'home' %}">Asosiy Pej</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'my_account' %}">My Account</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'vippackage' %}">VIP Vapetlar</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'news' %}">Task</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- News Section -->
+<section class="vip-container">
+    <h1>News</h1>
+    <div class="vip-packages">
+        {% for new in news %}
+        <div class="vip-card">
+            <img src="{{ new.image.url }}" alt="{{ new.title }}">
+            <h4>{{ new.title }}</h4>
+            <p>{{ new.description }}</p>
+            <p><strong>Kunlik Daromad:</strong> ${{ new.daily_share }}</p>
+            <p><strong>Likes:</strong> {{ new.like_count }}</p>
+            <form method="POST" action="{% url 'news' %}">
+                {% csrf_token %}
+                <input type="hidden" name="news_id" value="{{ new.id }}">
+                <button type="submit" class="like-btn">
+                    <span class="like-heart {% if user in new.likes.all %}liked{% else %}unliked{% endif %}">
+                        &#9829;
+                    </span>
+                    {% if user in new.likes.all %}
+                        Unlike
+                    {% else %}
+                        Like
+                    {% endif %}
+                </button>
+            </form>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

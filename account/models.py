@@ -1,4 +1,6 @@
+from uuid import uuid4
 from django.db import models
+from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 
@@ -21,21 +23,24 @@ class CustomUserManager(BaseUserManager):
 
 
 class CustomUser(AbstractBaseUser, PermissionsMixin):
-    full_name = models.CharField(_("Full Name"), max_length=255, blank=True)
-    username = models.CharField(_("Username"), max_length=255, blank=True, null=True)
+    full_name = models.CharField(_('Full Name'), max_length=255, blank=True)
+    username = models.CharField(_('Username'), max_length=255, blank=True, null=True)
     user_lang = models.CharField(max_length=10, blank=True, null=True)
     telegram_id = models.CharField(max_length=255, blank=True, null=True, unique=True)
-    tg_username = models.CharField(_("Telegram Username"), max_length=255, blank=True, null=True, unique=True)
+    tg_username = models.CharField(_('Telegram Username'), max_length=255, blank=True, null=True, unique=True)
     created_at = models.DateTimeField(auto_now_add=True)
     my_money = models.DecimalField(max_digits=20, decimal_places=7, default=0.0)
     image = models.ImageField(upload_to='staticfiles/account/images', null=True, blank=True)
     bio = models.TextField(max_length=300, null=True, blank=True)
-    email = models.EmailField(_("Email Address"), unique=True)
+    email = models.EmailField(_('Email Address'), unique=True)
     referral_link = models.CharField(max_length=255, blank=True, null=True)
-    team = models.ManyToManyField("self", blank=True, symmetrical=False)
+    team = models.ManyToManyField('self', blank=True, symmetrical=False)
     generate_id = models.CharField(max_length=10, unique=True, blank=True, null=True)
-    package = models.ForeignKey('account.VIPPackage', on_delete=models.CASCADE, related_name='users', null=True, blank=True)
+    vip_packages = models.ManyToManyField(
+        'account.VIPPackage', through='VIPPackagePurchase', related_name='users', blank=True
+    )
     address_money = models.CharField(max_length=100, null=True, blank=True, unique=True)
+    daily_income = models.DecimalField(max_digits=20, decimal_places=7, default=0.0)  # Yangi ustun
 
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
@@ -45,9 +50,24 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['full_name']
 
+    def get_referral_url(self):
+        domain = "http://127.0.0.1:8000"
+        return f"{domain}/register?ref={self.referral_link}"
+
+    def save(self, *args, **kwargs):
+        if not self.referral_link:
+            self.referral_link = str(uuid4())
+        self.daily_income = self.calculate_daily_income()
+        super().save(*args, **kwargs)
+
+    def calculate_daily_income(self):
+        """Foydalanuvchining kunlik umumiy daromadini hisoblash."""
+        active_packages = self.vippackagepurchase_set.filter(end_date__gte=timezone.now())
+        return sum(p.package.daily_income for p in active_packages)
+
     class Meta:
-        verbose_name = _("User")
-        verbose_name_plural = _("Users")
+        verbose_name = _('User')
+        verbose_name_plural = _('Users')
 
     def __str__(self):
         return self.email
@@ -78,7 +98,6 @@ class VIPPackage(models.Model):
     duration = models.PositiveIntegerField(verbose_name="Davomiyligi (kun)")
     daily_income = models.DecimalField(max_digits=20, decimal_places=15, verbose_name="Kunlik Daromad")
     created_at = models.DateTimeField(auto_now_add=True)
-    customuser = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='vip_packages')
 
     def __str__(self):
         return self.name
@@ -98,6 +117,15 @@ class News(models.Model):
 
     def __str__(self):
         return self.title
+
+    def like_count(self):
+        return self.likes.count()
+
+    def toggle_like(self, user):
+        if self.likes.filter(id=user.id).exists():
+            self.likes.remove(user)
+        else:
+            self.likes.add(user)
 
     class Meta:
         verbose_name = _("News")
@@ -120,3 +148,22 @@ class AddressMoney(models.Model):
 
     def __str__(self):
         return self.telegram_address_money
+
+
+class VIPPackagePurchase(models.Model):
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    package = models.ForeignKey(VIPPackage, on_delete=models.CASCADE)
+    start_date = models.DateTimeField(auto_now_add=True)
+    end_date = models.DateTimeField()
+
+    def save(self, *args, **kwargs):
+        if not self.end_date:
+            self.end_date = self.start_date + timezone.timedelta(days=self.package.duration)
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return f"{self.user.email} - {self.package.name}"
+
+    class Meta:
+        verbose_name = _('VIP Paket Xaridi')
+        verbose_name_plural = _('VIP Paket Xaridlari')
