@@ -9,12 +9,32 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f4f4f9;
+            background-color: #431C75; /* Updated background color */
             color: #333;
         }
 
+        .navbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: #333;
+            padding: 10px 20px;
+            color: white;
+        }
+
+        .navbar a {
+            text-decoration: none;
+            color: white;
+            margin: 0 10px;
+        }
+
+        .navbar a:hover {
+            text-decoration: underline;
+        }
+
         .container {
-            width: 80%;
+            width: 90%;
+            max-width: 1200px;
             margin: 20px auto;
             padding: 20px;
             background: #fff;
@@ -95,12 +115,6 @@
             border-bottom: none;
         }
 
-        .alert {
-            text-align: center;
-            color: red;
-            font-size: 14px;
-        }
-
         .info-section {
             margin-top: 30px;
         }
@@ -143,71 +157,95 @@
         .vip-packages li p {
             color: #333;
         }
+
+        @media (max-width: 768px) {
+            .vip-packages ul {
+                flex-direction: column;
+            }
+            .referral-link {
+                flex-direction: column;
+            }
+            .referral-link input, .referral-link button {
+                width: 100%;
+            }
+        }
+
     </style>
 </head>
 <body>
+<nav class="navbar">
+    <a class="navbar-brand" href="#">Crypto-Censorship</a>
+    <div>
+        <a href="{% url 'home' %}">Asosiy</a>
+        <a href="{% url 'my_account' %}">My Account</a>
+        <a href="{% url 'vippackage' %}">VIP</a>
+        <a href="{% url 'news' %}">Task</a>
+    </div>
+</nav>
 
-    <div class="container">
-        <h1>Welcome, {{ full_name }}</h1>
+<div class="container">
+    <h1>Welcome, {{ full_name }}</h1>
 
-        <div class="profile-image">
-            {% if image %}
-                <img src="{{ image.url }}" alt="Profile Image">
-            {% else %}
-                <div class="placeholder">No Image</div>
-            {% endif %}
-        </div>
-
-        <h3>Referral Link:</h3>
-        <div class="referral-link">
-            <input type="text" id="referralInput" value="{{ referral_link }}" readonly>
-            <button onclick="copyReferralLink()">Copy</button>
-        </div>
-
-        <h3>Team Members:</h3>
-        <ul>
-            {% for member in team_members %}
-                <li>{{ member.full_name }} ({{ member.email }})</li>
-            {% empty %}
-                <li>No team members yet.</li>
-            {% endfor %}
-        </ul>
-
-        <div class="info-section">
-            <h4>Your Daily Income:</h4>
-            <p>${{ daily_income }}</p>
-
-            <h4>Your Current Money:</h4>
-            <p>${{ my_money }}</p>
-
-            <h4>Account Details:</h4>
-            <p><strong>Full Name:</strong> {{ full_name }}</p>
-            <p><strong>Generate ID:</strong> {{ generate_id }}</p>
-        </div>
-
-        <div class="vip-packages">
-            <h3>Your Active VIP Packages:</h3>
-            <ul>
-                {% for package in active_vip_packages %}
-                    <li>
-                        <h5>{{ package.name }}</h5>
-                        <p><strong>Duration:</strong> {{ package.duration }} days</p>
-                        <p><strong>Expiry Date:</strong> {{ package.expiry_date }}</p>
-                    </li>
-                {% empty %}
-                    <li>No active VIP packages.</li>
-                {% endfor %}
-            </ul>
-        </div>
+    <div class="profile-image">
+        {% if image %}
+        <img src="{{ image.url }}" alt="Profile Image">
+        {% else %}
+        <div class="placeholder">No Image</div>
+        {% endif %}
     </div>
 
-    <script>
+    <h3>Referral Link:</h3>
+    <div class="referral-link">
+        <input type="text" id="referralInput" value="http://127.0.0.1:8000/register?ref={{ referral_link }}" readonly>
+        <button onclick="copyReferralLink()">Copy</button>
+    </div>
+
+
+    <h3>Team Members:</h3>
+    <ul>
+        {% for member in team_members %}
+        <li>{{ member.full_name }} ({{ member.email }})</li>
+        {% empty %}
+        <li>No team members yet.</li>
+        {% endfor %}
+    </ul>
+
+    <div class="info-section">
+        <h4>Your Daily Income:</h4>
+        <p>${{ daily_income }}</p>
+
+        <h4>Your Current Money:</h4>
+        <p>${{ my_money }}</p>
+
+        <h4>Account Details:</h4>
+        <p><strong>Full Name:</strong> {{ full_name }}</p>
+        <p><strong>Generate ID:</strong> {{ generate_id }}</p>
+    </div>
+
+    <div class="vip-packages">
+        <h3>Your Active VIP Packages:</h3>
+        <ul>
+            {% for package in active_vip_packages %}
+            <li>
+                <h5>{{ package.name }}</h5>
+                <p><strong>Duration:</strong> {{ package.duration }} days</p>
+                <p><strong>Expiry Date:</strong> {{ package.expiry_date }}</p>
+            </li>
+            {% empty %}
+            <li>No active VIP packages.</li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+
+<script>
         function copyReferralLink() {
             const input = document.getElementById('referralInput');
             input.select();
             document.execCommand('copy');
             alert('Referral link copied!');
         }
-    </script>
+
+</script>
 </body>
 </html>

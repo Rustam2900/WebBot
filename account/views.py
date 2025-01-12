@@ -89,7 +89,6 @@ def my_account(request):
     expired_packages = user.vip_packages.exclude(id__in=[p.id for p in active_vip_packages])
     expired_packages.delete()
 
-    # Foydalanuvchining kunlik daromadi
     daily_income = user.calculate_daily_income()
 
     # VIP paketini sotib olish va referalga 3% qo'shish
@@ -149,6 +148,7 @@ def my_account(request):
 @login_required
 def news_(request):
     news_list = News.objects.all()
+    user = request.user
 
     if request.method == 'POST':
         news_id = request.POST.get('news_id')
@@ -158,11 +158,14 @@ def news_(request):
         if news_item.likes.filter(id=request.user.id).exists():
             news_item.likes.remove(request.user)
             # Like olib tashlanganda my_money dan kamaytirish
-            request.user.my_money -= news_item.daily_share
+            request.user.my_money -= user.daily_income
         else:
             news_item.likes.add(request.user)
             # Like qo'shilganda my_money ga qo'shish
-            request.user.my_money += news_item.daily_share
+            request.user.my_money += user.daily_income
+
+        # Foydalanuvchining kunlik daromadini yangilash
+        request.user.calculate_daily_income()
 
         request.user.save()
         return redirect('news')

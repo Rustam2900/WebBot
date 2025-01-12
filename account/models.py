@@ -3,6 +3,7 @@ from django.db import models
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
+from django.contrib.sites.models import Site
 
 
 class CustomUserManager(BaseUserManager):
@@ -51,19 +52,26 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     REQUIRED_FIELDS = ['full_name']
 
     def get_referral_url(self):
-        domain = "http://127.0.0.1:8000"
-        return f"{domain}/register?ref={self.referral_link}"
+        current_site = Site.objects.get_current()
+        domain = current_site.domain
+        return f"https://{domain}/register?ref={self.referral_link}"
 
     def save(self, *args, **kwargs):
         if not self.referral_link:
             self.referral_link = str(uuid4())
-        self.daily_income = self.calculate_daily_income()
         super().save(*args, **kwargs)
 
     def calculate_daily_income(self):
-        """Foydalanuvchining kunlik umumiy daromadini hisoblash."""
-        active_packages = self.vippackagepurchase_set.filter(end_date__gte=timezone.now())
-        return sum(p.package.daily_income for p in active_packages)
+        """
+        Foydalanuvchining VIP paketlari asosida kunlik daromadini hisoblab qaytaradi va yangilaydi.
+        """
+        total_income = sum(
+            purchase.package.daily_income_vip
+            for purchase in VIPPackagePurchase.objects.filter(user=self)
+        )
+        self.daily_income = total_income
+        self.save(update_fields=['daily_income'])
+        return total_income
 
     class Meta:
         verbose_name = _('User')
@@ -96,7 +104,7 @@ class VIPPackage(models.Model):
     description = models.TextField(_("description"))
     price = models.DecimalField(max_digits=20, decimal_places=2, verbose_name="Umumiy Narx")
     duration = models.PositiveIntegerField(verbose_name="Davomiyligi (kun)")
-    daily_income = models.DecimalField(max_digits=20, decimal_places=15, verbose_name="Kunlik Daromad")
+    daily_income_vip = models.DecimalField(max_digits=20, decimal_places=15, verbose_name="Kunlik Daromad")
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

@@ -11,10 +11,9 @@ environ.Env.read_env(".env")
 
 SECRET_KEY = env("SECRET_KEY")
 DEBUG = env("DEBUG")
-ALLOWED_HOSTS = [
-    'crypto-cunsership.uz',
-    'www.crypto-cunsership.uz',  # Agar sizning domeningiz www bilan ishlasa
-]
+
+ALLOWED_HOSTS = env.list("ALLOWED_HOSTS")
+
 BOT_TOKEN = env.str('BOT_TOKEN')
 
 INSTALLED_APPS = [
@@ -30,6 +29,7 @@ INSTALLED_APPS = [
     'bot',
     'account',
     'widget_tweaks',
+    'django.contrib.sites',
 
 ]
 
