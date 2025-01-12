@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate
 from django.contrib import messages
 from account.forms import CustomUserRegistrationForm, CustomUserLoginForm, UserUpdateForm, ProfileUpdateForm
@@ -72,10 +72,8 @@ def vip_package(request):
 def my_account(request):
     user = request.user
 
-    # Referal team ko'rinishini olish
     team_members = user.team.all()
 
-    # VIP paketlarni amal qilish muddatini aniqlash
     now = timezone.now()
     active_vip_packages = []
     for package in user.vip_packages.all():
@@ -85,13 +83,11 @@ def my_account(request):
             if expiry_date >= now:
                 active_vip_packages.append(package)
 
-    # Amal qilish muddati tugagan paketlarni o'chirish
     expired_packages = user.vip_packages.exclude(id__in=[p.id for p in active_vip_packages])
     expired_packages.delete()
 
     daily_income = user.calculate_daily_income()
 
-    # VIP paketini sotib olish va referalga 3% qo'shish
     if request.method == 'POST' and 'package_id' in request.POST:
         package_id = request.POST.get('package_id')
         if package_id:
@@ -115,7 +111,6 @@ def my_account(request):
             messages.success(request, f"You have successfully purchased {package.name}!")
             return redirect('account:my_account')
 
-    # Foydalanuvchining ma'lumotlarini yangilash
     if request.method == 'POST' and 'update_profile' in request.POST:
         user_form = UserUpdateForm(request.POST, instance=user)
         profile_form = ProfileUpdateForm(request.POST, request.FILES, instance=user)
@@ -154,17 +149,13 @@ def news_(request):
         news_id = request.POST.get('news_id')
         news_item = News.objects.get(id=news_id)
 
-        # Yangiliklarga like yoki unlike qilish
         if news_item.likes.filter(id=request.user.id).exists():
             news_item.likes.remove(request.user)
-            # Like olib tashlanganda my_money dan kamaytirish
             request.user.my_money -= user.daily_income
         else:
             news_item.likes.add(request.user)
-            # Like qo'shilganda my_money ga qo'shish
             request.user.my_money += user.daily_income
 
-        # Foydalanuvchining kunlik daromadini yangilash
         request.user.calculate_daily_income()
 
         request.user.save()

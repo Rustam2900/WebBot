@@ -184,7 +184,7 @@
 </nav>
 
 <div class="container">
-    <h1>Welcome, {{ full_name }}</h1>
+    <h1>Assalom Xushkelibsiz {{ full_name }}</h1>
 
     <div class="profile-image">
         {% if image %}
@@ -201,7 +201,7 @@
     </div>
 
 
-    <h3>Team Members:</h3>
+    <h3>Sizni Jamo:</h3>
     <ul>
         {% for member in team_members %}
         <li>{{ member.full_name }} ({{ member.email }})</li>
@@ -210,20 +210,26 @@
         {% endfor %}
     </ul>
 
-    <div class="info-section">
-        <h4>Your Daily Income:</h4>
-        <p>${{ daily_income }}</p>
+   <div class="info-section">
+    <h4>kunlik balansi:</h4>
+    <p>${{ daily_income }}</p>
 
-        <h4>Your Current Money:</h4>
-        <p>${{ my_money }}</p>
+    <h4>user balansi:</h4>
+    <p>${{ my_money }}</p>
 
-        <h4>Account Details:</h4>
-        <p><strong>Full Name:</strong> {{ full_name }}</p>
-        <p><strong>Generate ID:</strong> {{ generate_id }}</p>
-    </div>
+    <h4>User malumotlari:</h4>
+    <p><strong>Full Name:</strong> {{ full_name }}</p>
+    <p><strong>Generate ID:</strong> {{ generate_id }}</p>
+
+    <!-- Pul kiritish buttoni -->
+    <button onclick="window.location.href='https://t.me/CryptoCunsershipBot' " class="btn btn-success">Pul kiritish</button>
+
+    <!-- Pul chiqarish buttoni -->
+    <button onclick="window.location.href='https://t.me/CryptoCunsershipBot' " class="btn btn-danger">Pul chiqarish</button>
+</div>
 
     <div class="vip-packages">
-        <h3>Your Active VIP Packages:</h3>
+        <h3>User activ Viplari:</h3>
         <ul>
             {% for package in active_vip_packages %}
             <li>
