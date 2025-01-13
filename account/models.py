@@ -3,7 +3,6 @@ from django.db import models
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
-from django.contrib.sites.models import Site
 
 
 class CustomUserManager(BaseUserManager):
@@ -41,7 +40,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         'account.VIPPackage', through='VIPPackagePurchase', related_name='users', blank=True
     )
     address_money = models.CharField(max_length=100, null=True, blank=True, unique=True)
-    daily_income = models.DecimalField(max_digits=20, decimal_places=7, default=0.0)  # Yangi ustun
+    daily_income = models.DecimalField(max_digits=20, decimal_places=7, default=0.0)
 
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
@@ -52,8 +51,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     REQUIRED_FIELDS = ['full_name']
 
     def get_referral_url(self):
-        current_site = Site.objects.get_current()
-        domain = current_site.domain
+        domain = ''
         return f"https://{domain}/register?ref={self.referral_link}"
 
     def save(self, *args, **kwargs):
@@ -147,9 +145,6 @@ class OrderMinSum(models.Model):
         verbose_name = "Order minimum sum"
         verbose_name_plural = "Order minimum sum"
 
-    def __str__(self):
-        return self.min_order_sum
-
 
 class AddressMoney(models.Model):
     telegram_address_money = models.CharField(max_length=100, null=True, blank=True, unique=True)
@@ -162,7 +157,7 @@ class VIPPackagePurchase(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     package = models.ForeignKey(VIPPackage, on_delete=models.CASCADE)
     start_date = models.DateTimeField(auto_now_add=True)
-    end_date = models.DateTimeField()
+    end_date = models.DateTimeField(null=True, blank=True)
 
     def save(self, *args, **kwargs):
         if not self.end_date:

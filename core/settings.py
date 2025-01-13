@@ -29,7 +29,6 @@ INSTALLED_APPS = [
     'bot',
     'account',
     'widget_tweaks',
-    'django.contrib.sites',
 
 ]
 

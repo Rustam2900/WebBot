@@ -8,13 +8,14 @@ from aiogram.fsm.context import FSMContext
 from aiogram.types import Message, CallbackQuery, InlineKeyboardMarkup, InlineKeyboardButton
 from asgiref.sync import sync_to_async
 from django.db import transaction
+from django.utils import timezone
 
-from account.models import CustomUser, VIPPackage, AddressMoney, OrderMinSum
+from account.models import CustomUser, VIPPackage, AddressMoney, OrderMinSum, VIPPackagePurchase
 from bot.db import save_user_telegram_info, get_user_language, get_user_money_statistics
 from bot.keyboards import get_languages, get_main_menu
 from bot.states import UserStates, VIPPurchaseState, MoneyWithdrawal
 
-from bot.utils import default_languages, introduction_template, user_languages, message_history
+from bot.utils import default_languages, introduction_template, user_languages
 from django.conf import settings
 from aiogram.client.default import DefaultBotProperties
 from decimal import Decimal
@@ -130,8 +131,8 @@ async def show_statistics(message: Message):
         f"📅 {default_languages[user_lang]['earnings_1_month']} <b>{user_stats['income_1_month']} $</b>\n"
         f"💰 {default_languages[user_lang]['total_earnings']} <b>{user_stats['total_income']} $</b>\n\n"
 
-        f"🏦 <b>VIP packages:</b>\n"
-        f"💎 {default_languages[user_lang]['total_spent_on_vip']}: <b>{user_stats['total_vip_spent']} $</b>\n"
+        # f"🏦 <b>VIP packages:</b>\n"
+        # f"💎 {default_languages[user_lang]['total_spent_on_vip']}: <b>{user_stats['total_vip_spent']} $</b>\n"
     )
 
     try:
@@ -188,7 +189,7 @@ async def show_vip_package_details(callback_query: CallbackQuery):
             f"{package.description_ru}\n\n"
             f"Цена: {package.price} $\n"
             f"Длительность: {package.duration} дней\n"
-            f"Ежедневный доход: {package.daily_income} $"
+            f"Ежедневный доход: {package.daily_income_vip} $"
         )
         button_text = "Купить пакет"
     else:
@@ -198,7 +199,7 @@ async def show_vip_package_details(callback_query: CallbackQuery):
             f"{package.description_en}\n\n"
             f"price: {package.price} $\n"
             f"Duration: {package.duration} day\n"
-            f"Daily income: {package.daily_income} $"
+            f"Daily income: {package.daily_income_vip} $"
         )
         button_text = "Buy a package"
 
@@ -302,6 +303,52 @@ async def handle_receipt_photo(message: Message, state: FSMContext):
     await state.clear()
 
 
+# @router.callback_query(F.data.startswith("confirm_"))
+# async def confirm_purchase(callback_query: CallbackQuery):
+#     if callback_query.from_user.id != ADMIN_ID:
+#         await callback_query.answer("❌ Sizda bu amalni bajarish huquqi yo'q!", show_alert=True)
+#         return
+#
+#     data_parts = callback_query.data.split("_")
+#     if len(data_parts) < 3:
+#         await callback_query.answer("❌ Xatolik: Callback ma'lumotlari noto'g'ri!", show_alert=True)
+#         return
+#     package_id = int(data_parts[1])
+#     user_id = int(data_parts[2])
+#
+#     user_lang = await get_user_language(user_id)
+#
+#     try:
+#         package = await sync_to_async(VIPPackage.objects.get)(id=package_id)
+#         user = await sync_to_async(CustomUser.objects.get)(telegram_id=user_id)
+#     except (VIPPackage.DoesNotExist, CustomUser.DoesNotExist):
+#         await callback_query.answer(text=default_languages[user_lang]['not'])
+#         return
+#
+#     # VIP paket narxini foydalanuvchi hisobiga qo'shish
+#     user.my_money += package.price
+#     await sync_to_async(user.save)()
+#
+#     # Referalni olish va 10% qo'shish
+#     referrer = await sync_to_async(user.team.first)()  # Refererni topish
+#     if referrer:
+#         referrer_bonus = package.price * 0.10  # 10% bonus
+#         referrer.my_money += referrer_bonus
+#         await sync_to_async(referrer.save)()  # Referer hisobi saqlanadi
+#
+#     # Xabarlarni yangilash va tasdiqlash
+#     await callback_query.message.edit_reply_markup(reply_markup=None)
+#     await callback_query.message.answer(
+#         text=f"✅ {user.full_name or user.username} uchun {package.price}$ qo'shildi."
+#     )
+#     if referrer:
+#         await callback_query.message.answer(
+#             text=f"✅ Referal uchun {referrer_bonus}$ qo'shildi (taklif qilgan shaxs: {referrer.full_name or referrer.username})."
+#         )
+#     await callback_query.answer("✅ Muvaffaqiyatli tasdiqlandi!")
+#     await callback_query.message.delete()
+
+
 @router.callback_query(F.data.startswith("confirm_"))
 async def confirm_purchase(callback_query: CallbackQuery):
     if callback_query.from_user.id != ADMIN_ID:
@@ -312,30 +359,52 @@ async def confirm_purchase(callback_query: CallbackQuery):
     if len(data_parts) < 3:
         await callback_query.answer("❌ Xatolik: Callback ma'lumotlari noto'g'ri!", show_alert=True)
         return
-    package_id = int(data_parts[1])
-    user_id = int(data_parts[2])
+
+    try:
+        package_id = int(data_parts[1])
+        user_id = int(data_parts[2])
+    except ValueError:
+        await callback_query.answer("❌ Xatolik: IDlar noto'g'ri formatda!", show_alert=True)
+        return
 
     user_lang = await get_user_language(user_id)
 
     try:
         package = await sync_to_async(VIPPackage.objects.get)(id=package_id)
         user = await sync_to_async(CustomUser.objects.get)(telegram_id=user_id)
-    except (VIPPackage.DoesNotExist, CustomUser.DoesNotExist):
-        await callback_query.answer(text=default_languages[user_lang]['not'])
+    except VIPPackage.DoesNotExist:
+        await callback_query.answer(text=default_languages[user_lang]['package_not_found'], show_alert=True)
+        return
+    except CustomUser.DoesNotExist:
+        await callback_query.answer(text=default_languages[user_lang]['user_not_found'], show_alert=True)
         return
 
-    # VIP paket narxini foydalanuvchi hisobiga qo'shish
-    user.my_money += package.price
-    await sync_to_async(user.save)()
+    is_package_linked = await sync_to_async(lambda: user.vip_packages.filter(id=package.id).exists())()
+    if not is_package_linked:
+        await sync_to_async(user.vip_packages.add)(package)
 
-    # Referalni olish va 10% qo'shish
-    referrer = await sync_to_async(user.team.first)()  # Refererni topish
+    try:
+        start_date = timezone.now()
+        end_date = start_date + timezone.timedelta(days=package.duration)
+
+        purchase = VIPPackagePurchase(
+            user=user,
+            package=package,
+            start_date=start_date,
+            end_date=end_date,
+        )
+        await sync_to_async(purchase.save)()
+    except Exception as e:
+        print("Error during purchase save:", e)
+        await callback_query.answer("❌ Xaridni saqlashda xatolik yuz berdi!", show_alert=True)
+        return
+
+    referrer = await sync_to_async(lambda: user.team.first())()
     if referrer:
-        referrer_bonus = package.price * 0.10  # 10% bonus
+        referrer_bonus = package.price * 0.10
         referrer.my_money += referrer_bonus
-        await sync_to_async(referrer.save)()  # Referer hisobi saqlanadi
+        await sync_to_async(referrer.save)()
 
-    # Xabarlarni yangilash va tasdiqlash
     await callback_query.message.edit_reply_markup(reply_markup=None)
     await callback_query.message.answer(
         text=f"✅ {user.full_name or user.username} uchun {package.price}$ qo'shildi."
@@ -346,7 +415,6 @@ async def confirm_purchase(callback_query: CallbackQuery):
         )
     await callback_query.answer("✅ Muvaffaqiyatli tasdiqlandi!")
     await callback_query.message.delete()
-
 
 
 @router.callback_query(F.data.startswith("cancel_"))
