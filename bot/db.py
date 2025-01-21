@@ -45,15 +45,11 @@ def get_user_money_statistics(user_id):
         telegram_id=user_id
     ).aggregate(total_income=Sum('my_money'))['total_income'] or 0
 
-    # total_vip_spent = VIPPackage.objects.filter(
-    #     customuser__telegram_id=user_id
-    # ).aggregate(total_spent=Sum('price'))['total_spent'] or 0
-
     return {
         "income_24h": income_24h,
         "income_1_month": income_1_month,
         "total_income": total_income,
-        # "total_vip_spent": total_vip_spent,
+
     }
 
 
@@ -64,7 +60,6 @@ def get_all_users():
             telegram_id__isnull=False,
         ).exclude(telegram_id='').exclude(telegram_id='0')
     )
-
 
 
 @sync_to_async

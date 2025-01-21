@@ -102,25 +102,20 @@ USE_I18N = True
 
 USE_TZ = True
 
-# Statik fayllar uchun URL
 STATIC_URL = '/static/'
 
-# Statik fayllar yig'iladigan joy (faqat production uchun ishlatiladi)
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
-# Ishlab chiqish (development) muhiti uchun qo'shimcha statik fayllar joyi
 STATICFILES_DIRS = [
-    BASE_DIR / 'static',  # Alohida 'static' papkasidan foydalaning
+    BASE_DIR / 'static',
 ]
 CSRF_TRUSTED_ORIGINS = [
     'https://crypto-cunsership.uz',
 ]
 
-# Media fayllar uchun URL va yo'l
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
-# Tarjima fayllari uchun yo'l
 LOCALE_PATHS = [
     BASE_DIR / 'locale/',
 ]

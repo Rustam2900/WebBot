@@ -15,7 +15,7 @@ class CustomUserAdmin(admin.ModelAdmin):
         (None, {'fields': ('email', 'password')}),
         ('Personal info', {'fields': (
             'full_name', 'username', 'user_lang', 'telegram_id', 'tg_username', 'image', 'bio', 'referral_link',
-            'team', 'generate_id', 'address_money', 'daily_income', 'created_at')}),  # 'vip_packages' olib tashlandi
+            'team', 'generate_id', 'address_money', 'daily_income', 'created_at')}),
         ('Permissions', {'fields': ('is_active', 'is_staff', 'is_superuser')}),
         ('Important dates', {'fields': ('last_login',)}),
     )
@@ -66,7 +66,7 @@ class AddressMoneyAdmin(admin.ModelAdmin):
 @admin.register(VIPPackagePurchase)
 class VIPPackagePurchaseAdmin(admin.ModelAdmin):
     list_display = (
-        'user', 'package', 'start_date', 'end_date')  # To'g'ri atribut nomlari ishlatildi
-    list_filter = ('start_date', 'end_date')  # To'g'ri atribut nomlari ishlatildi
-    search_fields = ('user__email', 'package__name')  # To'g'ri atribut nomlari ishlatildi
+        'user', 'package', 'start_date', 'end_date')
+    list_filter = ('start_date', 'end_date')
+    search_fields = ('user__email', 'package__name')
 
